@@ -96,8 +96,7 @@ contract ZeroDay {
             emit Decide(id, true);
         } else {
             vuln.status = Status.Declined;
-            // change to vuln.exploitable
-            msg.sender.send(vuln.bounty);
+            vuln.exploitable.restore.value(vuln.bounty)();
             emit Decide(id, false);
         }
     }
