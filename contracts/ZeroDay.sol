@@ -100,4 +100,8 @@ contract ZeroDay {
             emit Decide(id, false);
         }
     }
+
+    function length() public view returns (uint256) {
+        return vulns.length;
+    }
 }
