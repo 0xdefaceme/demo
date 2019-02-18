@@ -2,11 +2,11 @@ import "@babel/polyfill";
 import React from "react";
 import ReactDOM from "react-dom";
 
-import Vulnerability from "./models/Vulnerability";
-import VulnerabilityView from "./views/Vulnerability";
+import Vulnerabilities from "./models/Vulnerabilities";
+import VulnerabilityList from "./views/VulnerabilityList";
 
-const store = new Vulnerability();
+const store = new Vulnerabilities();
 ReactDOM.render(
-    <VulnerabilityView vulnerability={store} />, 
+    <VulnerabilityList vulnerabilities={store} />, 
     document.getElementById('root')
 );
