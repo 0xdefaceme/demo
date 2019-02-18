@@ -16,6 +16,33 @@ class Vulnerabilities {
         );
     }
 
+    filter = flow(function * (web3, account, exploitable) {
+        this.state = "pending";
+
+        const contract = yield this.contract(web3);
+        let ids;
+        try {
+            ids = yield contract
+                            .methods
+                            .filter(exploitable)
+                            .call({from: account});
+        } catch (err) {
+            console.log(err);
+            this.state = "error";
+        }
+
+        for (let i = 0; i < ids.length; i++) {
+            try {
+                const vuln = new Vulnerability();
+                yield vuln.fetch(web3, account, i);
+                this.list.push(vuln);
+            } catch (err) {
+                console.log(err);
+                this.state = "error";
+            }
+        }
+    });
+
     fetchAll = flow(function * (web3, account) {
         this.state = "pending";
 

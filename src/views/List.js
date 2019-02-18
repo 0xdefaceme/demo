@@ -12,11 +12,13 @@ class VulnerabilityList extends Component {
     constructor(props) {
         super(props);
     }
+
     async componentDidMount() {
+        const exploitable = this.props.store.router.queryParams.exploitable;
         const web3 = await getWeb3();        
         const account = (await web3.eth.getAccounts())[0];
         const { vulnerabilities } = this.props.store;
-        await vulnerabilities.fetchAll(web3, account);
+        await vulnerabilities.filter(web3, account, exploitable);
     }
 
     render() {

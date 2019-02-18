@@ -104,4 +104,22 @@ contract ZeroDay {
     function length() public view returns (uint256) {
         return vulns.length;
     }
+
+    function filter(address exploitable) public view returns (uint256[] memory filtered) {
+        uint256 count = 0;
+        for(uint256 i = 0; i < vulns.length; i++) {
+            if (address(vulns[i].exploitable) == exploitable) {
+                count++;
+            }
+        }
+        
+        filtered = new uint256[](count);
+        count = 0;
+        
+        for (uint256 j = 0; j < vulns.length; j++) {
+            if (address(vulns[j].exploitable) == exploitable) {
+                filtered[count++] = j;
+            }
+        }
+    }
 }

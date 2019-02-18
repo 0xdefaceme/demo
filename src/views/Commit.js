@@ -23,6 +23,7 @@ class Commit extends Component {
         await vulnerabilities.commit(web3, account, exploitable, damage);
 
     }
+
     render() {
         return (
             <div>
