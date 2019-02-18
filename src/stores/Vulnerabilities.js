@@ -20,12 +20,13 @@ class Vulnerabilities {
         this.state = "pending";
 
         const contract = yield this.contract(web3);
-        const length = yield this.fetchLength(web3, account);
+        yield this.fetchLength(web3, account);
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < this.length; i++) {
             try {
-               const vuln = yield new Vulnerability().fetch(i);
-               list.push(vuln);
+               const vuln = new Vulnerability();
+               yield vuln.fetch(web3, account, i);
+               this.list.push(vuln);
             } catch (err) {
                 console.log(err);
                 this.state = "error";
@@ -36,7 +37,7 @@ class Vulnerabilities {
     fetchLength = flow(function * (web3, account) {
         this.state = "pending";
 
-        const contract = this.contract(web3);
+        const contract = yield this.contract(web3);
 
         try {
             const len = yield contract.methods.length().call({from: account});
