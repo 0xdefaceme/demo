@@ -10,12 +10,12 @@ class Pay extends Component {
     constructor(props) {
         super(props);
 
-        this.onDeposit = this.onDeposit.bind(this);
+        this.onPay = this.onPay.bind(this);
     }
 
     async componentDidMount() {
         const id = this.props.store.router.queryParams.id;
-        const web3 = await getWeb3();        
+        const { web3 } = this.props.store;
         const account = (await web3.eth.getAccounts())[0];
         const { vulnerability } = this.props.store;
         await vulnerability.compute(web3, account, id);
@@ -23,7 +23,7 @@ class Pay extends Component {
 
     async onPay() {
         const id = this.props.store.router.queryParams.id;
-        const web3 = await getWeb3();        
+        const { web3 } = this.props.store;
         const account = (await web3.eth.getAccounts())[0];
         const { vulnerability } = this.props.store;
         await vulnerability.pay(web3, account, id);
@@ -34,6 +34,7 @@ class Pay extends Component {
         const { vulnerability } = this.props.store;
         return (
             <div>
+                <p>Only possible as owner of the contract.</p>
                 <p>ID: {vulnerability.id}</p>
                 <p>Exploitable: {vulnerability.exploitable}</p>
                 <p>Status: {vulnerability.status}</p>

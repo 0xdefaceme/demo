@@ -17,11 +17,9 @@ class Commit extends Component {
         const exploitable = this.refs.exploitable.value;
         const damage = this.refs.damage.value;
 
-        const web3 = await getWeb3();
-        const account = (await web3.eth.getAccounts())[0];
+        const { web3, account } = this.props.store;
         const { vulnerabilities } = this.props.store;
         await vulnerabilities.commit(web3, account, exploitable, damage);
-
     }
 
     render() {

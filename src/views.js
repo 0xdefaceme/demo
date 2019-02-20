@@ -6,8 +6,8 @@ import Commit from "./views/Commit";
 import Pay from "./views/Pay";
 
 const views = {
-    vulns: new Route({
-        path: '/vulns',
+    list: new Route({
+        path: '/list',
         component: <List />
     }),
     commit: new Route({

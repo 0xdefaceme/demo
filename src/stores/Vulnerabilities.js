@@ -17,6 +17,7 @@ class Vulnerabilities {
     }
 
     filter = flow(function * (web3, account, exploitable) {
+        this.list = [];
         this.state = "pending";
 
         const contract = yield this.contract(web3);
@@ -44,6 +45,7 @@ class Vulnerabilities {
     });
 
     fetchAll = flow(function * (web3, account) {
+        this.list = [];
         this.state = "pending";
 
         const contract = yield this.contract(web3);
