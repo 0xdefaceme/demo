@@ -6,7 +6,6 @@
   "dependencies": {
     "bignumber.js": "^8.0.2",
     "eth-ecies": "^1.0.3",
-    "ethereumjs-util": "^6.1.0",
     "ethereumjs-wallet": "^0.6.3",
     "ipfs-http-client": "^29.1.1",
     "mobx": "^5.9.0",
