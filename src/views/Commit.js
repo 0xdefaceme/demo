@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {observer, inject} from 'mobx-react';
 
-import getWeb3 from "../utils/getWeb3";
-
 @inject("store")
 @observer
 class Commit extends Component {

@@ -4,6 +4,7 @@ import {Route} from 'mobx-router';
 import List from "./views/List";
 import Commit from "./views/Commit";
 import Pay from "./views/Pay";
+import Reveal from "./views/Reveal";
 
 const views = {
     list: new Route({
@@ -18,6 +19,10 @@ const views = {
         path: '/pay',
         component: <Pay />
     }),
+    reveal: new Route({
+        path: '/reveal',
+        component: <Reveal />
+    })
 }
 
 export default views;

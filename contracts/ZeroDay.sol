@@ -8,7 +8,7 @@ contract ZeroDay {
         IExploitable exploitable;
         address payable hunter;
         uint256 damage;
-        address key;
+        string key;
         uint256 bounty;
         string hash;
         Status status;
@@ -32,7 +32,7 @@ contract ZeroDay {
 
     event Pay(
         uint256 indexed id,
-        address indexed key,
+        string indexed key,
         uint256 indexed bounty
     );
 
@@ -55,7 +55,7 @@ contract ZeroDay {
             exploitable: exploitable,
             hunter: msg.sender,
             damage: damage,
-            key: address(0),
+            key: "",
             bounty: 0,
             hash: "",
             status: Status.Commited
@@ -73,7 +73,7 @@ contract ZeroDay {
         emit Reveal(id, hash);
     }
 
-    function pay(uint256 id, address key) public payable {
+    function pay(uint256 id, string memory key) public payable {
         Vuln storage vuln = vulns[id]; 
         uint256 bounty = vuln.damage * (vuln.exploitable.percentageZeroDay() / 100);
         require(msg.value >= bounty);

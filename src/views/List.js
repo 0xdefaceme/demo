@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import {observer, inject} from 'mobx-react';
 import {Link} from 'mobx-router';
 
-import getWeb3 from "../utils/getWeb3";
 import views from "../views";
 
 @inject("store")
@@ -85,6 +84,14 @@ class VulnerabilityList extends Component {
                             }}
                             store={this.props.store}>
                             Pay
+                        </Link>
+                        <Link
+                            view={views.reveal}
+                            queryParams={{
+                                id: vuln.id
+                            }}
+                            store={this.props.store}>
+                            Reveal
                         </Link>
                     </div>
                 ))}

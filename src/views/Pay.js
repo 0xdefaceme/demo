@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {observer, inject} from 'mobx-react';
 
-import getWeb3 from "../utils/getWeb3";
 
 @inject("store")
 @observer
@@ -41,7 +40,7 @@ class Pay extends Component {
                 <p>Damage: {vulnerability.damage}</p>
                 <p>Pay to reveal: {vulnerability.tmpbounty}</p>
                 <p>Private key (store pls): {vulnerability.privateKey}</p>
-                <p>Public key: {vulnerability.address}</p>
+                <p>Public key: {vulnerability.publicKey}</p>
                 <button onClick={this.onPay}>Pay</button>
             </div>
         );
