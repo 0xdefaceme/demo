@@ -69,6 +69,7 @@ contract ZeroDay {
         require(msg.sender == vuln.hunter);
 
         vuln.hash = hash;
+        vuln.status = Status.Revealed;
         emit Reveal(id, hash);
     }
 
@@ -81,6 +82,7 @@ contract ZeroDay {
 
         vuln.key = key; 
         vuln.bounty = msg.value;
+        vuln.status = Status.Payed;
         emit Pay(id, key, msg.value);
     }
 
@@ -105,7 +107,9 @@ contract ZeroDay {
         return vulns.length;
     }
 
-    function filter(address exploitable) public view returns (uint256[] memory filtered) {
+    function filter(
+        address exploitable
+    ) public view returns (uint256[] memory filtered) {
         uint256 count = 0;
         for(uint256 i = 0; i < vulns.length; i++) {
             if (address(vulns[i].exploitable) == exploitable) {

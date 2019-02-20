@@ -32,6 +32,14 @@ class VulnerabilityList extends Component {
                         <span>{vuln.id}</span>
                         <span>{vuln.exploitable}</span>
                         <span>{vuln.hunter}</span>
+                        <Link
+                            view={views.pay}
+                            queryParams={{
+                                id: vuln.id
+                            }}
+                            store={this.props.store}>
+                            Deposit
+                        </Link>
                     </div>
                 ))}
             </div>
