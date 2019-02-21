@@ -75,23 +75,32 @@ class VulnerabilityList extends Component {
                 {list.map((vuln, i) => (
                     <div key={i}>
                         <span>{vuln.id}</span>
+                        <span>{vuln.status}</span>
                         <span>{vuln.exploitable}</span>
                         <span>{vuln.hunter}</span>
                         <Link
                             view={views.pay}
-                            queryParams={{
-                                id: vuln.id
+                            params={{
+                                id: vuln.id.toString()
                             }}
                             store={this.props.store}>
                             Pay
                         </Link>
                         <Link
                             view={views.reveal}
-                            queryParams={{
-                                id: vuln.id
+                            params={{
+                                id: vuln.id.toString()
                             }}
                             store={this.props.store}>
                             Reveal
+                        </Link>
+                        <Link
+                            view={views.decide}
+                            params={{
+                                id: vuln.id.toString()
+                            }}
+                            store={this.props.store}>
+                            Decide
                         </Link>
                     </div>
                 ))}

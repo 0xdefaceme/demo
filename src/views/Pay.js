@@ -13,7 +13,7 @@ class Pay extends Component {
     }
 
     async componentDidMount() {
-        const id = this.props.store.router.queryParams.id;
+        const id = this.props.store.router.params.id;
         const { web3 } = this.props.store;
         const account = (await web3.eth.getAccounts())[0];
         const { vulnerability } = this.props.store;
@@ -21,7 +21,7 @@ class Pay extends Component {
     }
 
     async onPay() {
-        const id = this.props.store.router.queryParams.id;
+        const id = this.props.store.router.params.id;
         const { web3 } = this.props.store;
         const account = (await web3.eth.getAccounts())[0];
         const { vulnerability } = this.props.store;

@@ -5,6 +5,7 @@ import List from "./views/List";
 import Commit from "./views/Commit";
 import Pay from "./views/Pay";
 import Reveal from "./views/Reveal";
+import Decide from "./views/Decide";
 
 const views = {
     list: new Route({
@@ -16,12 +17,16 @@ const views = {
         component: <Commit />
     }),
     pay: new Route({
-        path: '/pay',
+        path: '/pay/:id',
         component: <Pay />
     }),
     reveal: new Route({
-        path: '/reveal',
+        path: '/reveal/:id',
         component: <Reveal />
+    }),
+    decide: new Route({
+        path: '/decide/:id',
+        component: <Decide />
     })
 }
 

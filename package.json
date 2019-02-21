@@ -4,6 +4,7 @@
   "description": "An ethereum smart contract hacking game",
   "main": "truffle.js",
   "dependencies": {
+    "axios": "^0.18.0",
     "bignumber.js": "^8.0.2",
     "eth-ecies": "^1.0.3",
     "ethereumjs-wallet": "^0.6.3",

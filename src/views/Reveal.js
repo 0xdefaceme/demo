@@ -25,7 +25,7 @@ class Reveal extends Component {
     }
 
     async onReveal() {
-        const id = this.props.store.router.queryParams.id;
+        const id = this.props.store.router.params.id;
         const { web3, ipfs, account } = this.props.store;
         const { vulnerability } = this.props.store;
         await vulnerability.reveal(web3, ipfs, account, id, this.state.value);
