@@ -21,6 +21,14 @@ class Decide extends Component {
         await vulnerability.decrypt(web3, account, id, key);
     }
 
+    onDecide(exit) {
+        return async () => {
+            const id = this.props.store.router.params.id;
+            const { web3, vulnerability, account } = this.props.store;
+            await vulnerability.decide(web3, account, id, exit);
+        }
+    }
+
     async componentDidMount() {
         const id = this.props.store.router.params.id;
         const { web3 } = this.props.store;
@@ -37,8 +45,8 @@ class Decide extends Component {
                 <input type="text" ref="key" placeholder="key" />
                 <button onClick={this.onDecrypt}>Decrypt</button>
                 <p>Vulnerability: {vulnerability.decrypted}</p>
-                <button onClick={this.onExit}>Exit</button>
-                <button onClick={this.onRestore}>Restore</button>
+                <button onClick={this.onDecide(true)}>Exit</button>
+                <button onClick={this.onDecide(false)}>Restore</button>
             </div>
         );
     }
