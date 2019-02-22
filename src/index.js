@@ -4,6 +4,10 @@ import ReactDOM from "react-dom";
 import { Provider } from 'mobx-react';
 import { MobxRouter, RouterStore, startRouter, Route } from 'mobx-router';
 import ipfsClient from 'ipfs-http-client';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faExternalLinkSquareAlt } from '@fortawesome/free-solid-svg-icons'
+
 
 import 'foundation-sites/dist/css/foundation.min.css';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
@@ -16,6 +20,7 @@ import Vulnerabilities from "./stores/Vulnerabilities";
 import Vulnerability from "./stores/Vulnerability";
 
 async function boot() {
+    library.add(faExternalLinkSquareAlt)
     const web3 = await getWeb3();
     const account = (await web3.eth.getAccounts())[0];
     const ipfs = ipfsClient(config.IPFS_PROVIDER, '5001', { protocol: 'https' });

@@ -1,6 +1,7 @@
 import React from "react";
 import {Route} from 'mobx-router';
 
+import Home from "./views/Home";
 import List from "./views/List";
 import Commit from "./views/Commit";
 import Pay from "./views/Pay";
@@ -8,6 +9,10 @@ import Reveal from "./views/Reveal";
 import Decide from "./views/Decide";
 
 const views = {
+    home: new Route({
+        path: '/',
+        component: <Home />
+    }),
     list: new Route({
         path: '/list',
         component: <List />
