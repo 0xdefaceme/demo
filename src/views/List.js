@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom';
 import {observer, inject} from 'mobx-react';
 import {Link} from 'mobx-router';
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import { Grid, Cell } from 'react-foundation';
+
 
 import views from "../views";
 
@@ -61,49 +64,74 @@ class VulnerabilityList extends Component {
         const { vulnerabilities: { list } } = this.props.store;
         return (
             <div>
-                <h1>List of Vulnerabilities</h1>
-                <p>
-                    <input
-                        type="text"
-                        ref="filter"
-                        onChange={this.onFilter}
-                        defaultValue={this.state.filter && this.state.filter.exploitable}
-                        placeholder="filter by contract"
-                    />
-                </p>
-                <Link view={views.commit} store={this.props.store}>Commit</Link>
-                {list.map((vuln, i) => (
-                    <div key={i}>
-                        <span>{vuln.id}</span>
-                        <span>{vuln.status}</span>
-                        <span>{vuln.exploitable}</span>
-                        <span>{vuln.hunter}</span>
+                <Grid className="display">
+                    <Cell large={1} />
+                    <Cell large={10}>
+                        <h1>List of Vulnerabilities</h1>
+                        <p>
+                            <input
+                                type="text"
+                                ref="filter"
+                                onChange={this.onFilter}
+                                defaultValue={this.state.filter && this.state.filter.exploitable}
+                                placeholder="filter by contract"
+                            />
+                        </p>
                         <Link
-                            view={views.pay}
-                            params={{
-                                id: vuln.id.toString()
-                            }}
+                            view={views.commit}
                             store={this.props.store}>
-                            Pay
+                            Commit
                         </Link>
-                        <Link
-                            view={views.reveal}
-                            params={{
-                                id: vuln.id.toString()
-                            }}
-                            store={this.props.store}>
-                            Reveal
-                        </Link>
-                        <Link
-                            view={views.decide}
-                            params={{
-                                id: vuln.id.toString()
-                            }}
-                            store={this.props.store}>
-                            Decide
-                        </Link>
-                    </div>
-                ))}
+                        <Table>
+                            <Thead>
+                                <Tr>
+                                    <Th>ID</Th>
+                                    <Th>Status</Th>
+                                    <Th>Contract address</Th>
+                                    <Th>Hunter</Th>
+                                    <Th>Actions</Th>
+                                </Tr>
+                            </Thead>
+                            <Tbody>
+                                {list.map((vuln, i) => (
+                                    <Tr key={i}>
+                                        <Td>{vuln.id}</Td>
+                                        <Td>{vuln.status}</Td>
+                                        <Td>{vuln.exploitable}</Td>
+                                        <Td>{vuln.hunter}</Td>
+                                        <Td>
+                                            <Link
+                                                view={views.pay}
+                                                params={{
+                                                    id: vuln.id.toString()
+                                                }}
+                                                store={this.props.store}>
+                                                Pay
+                                            </Link>
+                                            <Link
+                                                view={views.reveal}
+                                                params={{
+                                                    id: vuln.id.toString()
+                                                }}
+                                                store={this.props.store}>
+                                                Reveal
+                                            </Link>
+                                            <Link
+                                                view={views.decide}
+                                                params={{
+                                                    id: vuln.id.toString()
+                                                }}
+                                                store={this.props.store}>
+                                                Decide
+                                            </Link>
+                                        </Td>
+                                    </Tr>
+                                ))}
+                            </Tbody>
+                        </Table>
+                    </Cell>
+                    <Cell large={1} />
+                </Grid>
             </div>
         );
     }

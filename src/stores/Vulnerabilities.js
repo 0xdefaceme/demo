@@ -24,9 +24,9 @@ class Vulnerabilities {
         let ids;
         try {
             ids = yield contract
-                            .methods
-                            .filter(exploitable)
-                            .call({from: account});
+                .methods
+                .filter(exploitable)
+                .call({from: account});
         } catch (err) {
             console.log(err);
             this.state = "error";
