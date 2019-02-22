@@ -11,6 +11,8 @@ import {
 import styled from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+import views from "../views";
+
 import logo from "../assets/placeholder.png";
 
 const Wrapper = styled.div`
@@ -32,7 +34,7 @@ const Content = styled.div`
     }
     a {
         text-decoration: underline;
-        color: white;
+        color: ${props => props.color};
     }
 `;
 
@@ -124,9 +126,6 @@ const Pic = styled.span`
     font-size: 3em;
 `;
 
-const Description = styled.p`
-`;
-
 const Section = props => (
     <Background bgColor={props.bgColor} color={props.color}>
         <Grid className="display">
@@ -143,6 +142,8 @@ const Section = props => (
 @observer
 class Home extends Component {
     render() {
+        const { router: { goTo } } = this.props.store;
+        const { store } = this.props;
         return (
             <div>
                 <Section bgColor="white" color="black">
@@ -166,11 +167,14 @@ class Home extends Component {
                                     Ethereum smart contracts gracefully in case
                                     of vulnerabilities.
                                 </p>
-                                <ButtonWrapper>
-                                    <Button bgColor="black" color="white">
+                                <ButtonWrapper disabled>
+                                    <Button
+                                        bgColor="black"
+                                        color="white"
+                                        onClick={() => goTo(views.list, {}, store)}>
                                         Launch App
                                     </Button>
-                                    <HollowButton>
+                                    <HollowButton disabled>
                                         <FontAwesomeIcon
                                             icon="external-link-square-alt" />
                                         {' '}
@@ -185,7 +189,7 @@ class Home extends Component {
                     </Wrapper>
                 </Section>
                 <Section content bgColor="black" color="white">
-                    <Content height="90vh">
+                    <Content color="white" height="85vh">
                         <h1>What's 0xdeface?</h1>
                         <p>
                             A secure protocol for contract owners to act on
@@ -211,7 +215,7 @@ class Home extends Component {
                             <Cell large={4}>
                                 <Bullet>
                                     <Pic>⛓</Pic>
-                                    <Description>
+                                    <div>
                                         <p><b>Permissionless</b></p>
                                         0xdeface's{' '}
                                         <a target="_blank" href="#">Negotiator</a>
@@ -220,25 +224,25 @@ class Home extends Component {
                                         auditors and contract owners.
                                         Owners are in full control of their
                                         contracts.
-                                    </Description>
+                                    </div>
                                 </Bullet>
                             </Cell>
                             <Cell large={4}>
                                 <Bullet>
                                     <Pic>💸</Pic>
-                                    <Description>
+                                    <div>
                                         <p><b>Fair</b></p>
                                         User's don't lose their funds,
                                         developers don't lose their cred
                                         and auditors get rewarded fairly in
                                         Ether.
-                                    </Description>
+                                    </div>
                                 </Bullet>
                             </Cell>
                             <Cell large={4}>
                                 <Bullet>
                                     <Pic>📄</Pic>
-                                    <Description>
+                                    <div>
                                         <p><b>Canonical</b></p>
                                         0xdeface.me is building the{' '}
                                         <a target="_blank" href="#">EIP-XXXX</a>
@@ -246,15 +250,44 @@ class Home extends Component {
                                         to implement its interface. Only then
                                         are auditors allowed to submit 
                                         vulnerabilities.
-                                    </Description>
+                                    </div>
                                 </Bullet>
                             </Cell>
                         </Grid>
                     </Content>
                 </Section>
                 <Section content bgColor="white" color="black">
-                    <Content height="80vh">
-                        <h1>Call to action</h1>
+                    <Content color="black" height="60vh">
+                        <h1>Funding</h1>
+                        <p>
+                            0xdeface is being build by{' '}
+                            <a 
+                                target="_blank"
+                                href="https://twitter.com/TimDaub">
+                                Tim Daubenschütz
+                            </a>. It's planned to add a small negotiation
+                            fee into 0xdeface's Negotiator contract for
+                            continued maintenance and development. 0xdeface is
+                            actively looking for funding in form of grants.
+                            For inquiries contact:{' '}
+                            <a href="mailto:tim@0xdeface.me">
+                                tim@0xdeface.me
+                            </a>
+                        </p>
+                        <HR/>
+                        <h1>Contribute</h1>
+                        <p>
+                            Currently, the standard and marketplace are in very
+                            early stages of development. If you'd like to
+                            contribute anyways, email{' '}
+                            <a href="mailto:tim@0xdeface.me">
+                                tim@0xdeface.me
+                            </a>.
+                        </p>
+                    </Content>
+                </Section>
+                <Section content bgColor="black" color="white">
+                    <Content center color="white" height="10vh">
                     </Content>
                 </Section>
             </div>
