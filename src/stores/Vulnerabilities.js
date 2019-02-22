@@ -1,6 +1,6 @@
 import {observable, flow} from 'mobx';
 
-import ZeroDay from "../../build/contracts/ZeroDay";
+import Negotiator from "../../build/contracts/Negotiator";
 import Vulnerability from "./Vulnerability";
 
 class Vulnerabilities {
@@ -12,7 +12,7 @@ class Vulnerabilities {
     async contract(web3) {
         const networkId = await web3.eth.net.getId();
         return new web3.eth.Contract(
-            ZeroDay.abi, ZeroDay.networks[networkId].address
+            Negotiator.abi, Negotiator.networks[networkId].address
         );
     }
 

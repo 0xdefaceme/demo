@@ -2,10 +2,10 @@
 
 const Web3 = require('web3');
 const Exploitable = artifacts.require('./Exploitable.sol');
-const ZeroDay = artifacts.require('./ZeroDay.sol');
+const Negotiator = artifacts.require('./Negotiator.sol');
 
 module.exports = function(deployer, network, accounts) {
-  deployer.deploy(ZeroDay).then(instance => {
+  deployer.deploy(Negotiator).then(instance => {
     return deployer
       .deploy(Exploitable, instance.address)
       .then(async instance => {

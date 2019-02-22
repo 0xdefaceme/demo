@@ -2,7 +2,7 @@ pragma solidity 0.5.0;
 
 import "./IExploitable.sol";
 
-contract ZeroDay {
+contract Negotiator {
 
     struct Vuln {
         IExploitable exploitable;
@@ -48,7 +48,7 @@ contract ZeroDay {
         IExploitable exploitable,
         uint256 damage
     ) public returns (uint256 id) {
-        require(exploitable.implementsZeroDay());
+        require(exploitable.implementsEIP1337());
         require(damage <= address(exploitable).balance);
 
         id = vulns.push(Vuln({
@@ -75,7 +75,7 @@ contract ZeroDay {
 
     function pay(uint256 id, string memory key) public payable {
         Vuln storage vuln = vulns[id]; 
-        uint256 bounty = vuln.damage * (vuln.exploitable.percentageZeroDay() / 100);
+        uint256 bounty = vuln.damage * (vuln.exploitable.percentageEIP1337() / 100);
         require(msg.value >= bounty);
         require(msg.sender == address(vuln.exploitable));
         require(vuln.status == Status.Commited);
