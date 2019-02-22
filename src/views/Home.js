@@ -16,14 +16,17 @@ import views from "../views";
 import logo from "../assets/placeholder.png";
 
 const Wrapper = styled.div`
-    height: ${props => props.height};
+    height: auto;
+    min-height: ${props => props.minHeight};
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-bottom: 4em;
 `;
 
 const Content = styled.div`
     height: ${props => props.height};
+    padding-bottom: 4em;
     h1 {
         margin-top: 1.5em;
         font-weight: bold;
@@ -36,24 +39,21 @@ const Content = styled.div`
         text-decoration: underline;
         color: ${props => props.color};
     }
-`;
-
-const LogoWrapper = styled.div`
-    width: 50%; 
+    @media (max-width: 768px) {
+        padding-left: 1em;
+        padding-right: 1em;
+    }
 `;
 
 const Logo = styled.img`
     vertical-align: middle;
-    height: 70%;
-    width: 70%;
+    width: 280px; 
     display: block;
     margin-left: auto;
     margin-right: auto;
 `;
 
 const Headline = styled.div`
-    font-family: 'Noto Sans', sans-serif;
-    width: 50%;
     h1 {
         font-size: 3em;
         font-weight: bold;
@@ -62,10 +62,15 @@ const Headline = styled.div`
     p {
         font-size: 1.4em;
     }
+    @media (max-width: 768px) {
+        text-align: center;
+    }
 `;
 
 const HeadlineWrapper = styled.div`
-    width: 400px;
+    @media (min-width: 768px) {
+        width: 400px;
+    }
 `;
 
 const ButtonWrapper = styled.div`
@@ -74,9 +79,14 @@ const ButtonWrapper = styled.div`
     button {
         margin-right: 20px;
     }
+    @media (max-width: 768px) {
+        justify-content: center;
+        align-items: center;
+    }
 `;
 
 const Button = styled.button`
+    display: inline-flex;
     background-color: ${props => props.bgColor};
     border: 1px solid white;
     color: ${props => props.color};
@@ -87,6 +97,7 @@ const Button = styled.button`
 `
 
 const HollowButton = styled.button`
+    display: inline-flex;
     background-color: ${props => props.bgColor};
     color: ${props => props.color};
     border: 1px solid ${props => props.color};
@@ -111,6 +122,7 @@ const Header = styled.div`
 const Background = styled.div`
     background-color: ${props => props.bgColor};
     color: ${props => props.color};
+    font-family: 'Noto Sans', sans-serif;
 `;
 
 const HR = styled.div`
@@ -155,41 +167,43 @@ class Home extends Component {
                             <MenuItem><a>Github</a></MenuItem>
                         </Menu>
                     </Header>
-                    <Wrapper height="70vh">
-                        <LogoWrapper>
-                            <Logo src={logo}/>
-                        </LogoWrapper>
-                        <Headline>
-                            <HeadlineWrapper>
-                                <h1>Exit gracefully.</h1>
-                                <p>
-                                    0xdeface.me is a standard to settle
-                                    Ethereum smart contracts gracefully in case
-                                    of vulnerabilities.
-                                </p>
-                                <ButtonWrapper disabled>
-                                    <Button
-                                        bgColor="black"
-                                        color="white"
-                                        onClick={() => goTo(views.list, {}, store)}>
-                                        Launch App
-                                    </Button>
-                                    <HollowButton disabled>
-                                        <FontAwesomeIcon
-                                            icon="external-link-square-alt" />
-                                        {' '}
-                                        Learn more
-                                    </HollowButton>
-                                </ButtonWrapper>
-                            </HeadlineWrapper>
-                        </Headline>
+                    <Wrapper minHeight="80vh">
+                        <Grid className="display">
+                            <Cell small={12} large={6}>
+                                <Logo src={logo}/>
+                            </Cell>
+                            <Cell small={12} large={6}>
+                                <Headline>
+                                    <HeadlineWrapper>
+                                        <h1>Exit gracefully.</h1>
+                                        <p>
+                                            0xdeface.me is a standard to settle
+                                            Ethereum smart contracts gracefully in case
+                                            of vulnerabilities.
+                                        </p>
+                                        <ButtonWrapper disabled>
+                                            <Button
+                                                bgColor="black"
+                                                color="white"
+                                                onClick={() => goTo(views.list, {}, store)}>
+                                                Launch App
+                                            </Button>
+                                            <HollowButton disabled>
+                                                <FontAwesomeIcon
+                                                    icon="external-link-square-alt" />
+                                                {' '}
+                                                Learn more
+                                            </HollowButton>
+                                        </ButtonWrapper>
+                                    </HeadlineWrapper>
+                                </Headline>
+                            </Cell>
+                        </Grid>
                     </Wrapper>
-                    <Wrapper height="20vh">
-
-                    </Wrapper>
+                    <Wrapper minHeight="10vh" />
                 </Section>
                 <Section content bgColor="black" color="white">
-                    <Content color="white" height="85vh">
+                    <Content color="white" height="auto">
                         <h1>What's 0xdeface?</h1>
                         <p>
                             A secure protocol for contract owners to act on
@@ -257,7 +271,7 @@ class Home extends Component {
                     </Content>
                 </Section>
                 <Section content bgColor="white" color="black">
-                    <Content color="black" height="60vh">
+                    <Content color="black" height="auto">
                         <h1>Funding</h1>
                         <p>
                             0xdeface is being build by{' '}
