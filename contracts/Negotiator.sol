@@ -41,6 +41,7 @@ contract Negotiator {
         bool indexed exit
     );
 
+    // TODO: Decide what to do with this constructor
     constructor() public {
     }
 
@@ -86,6 +87,9 @@ contract Negotiator {
         emit Pay(id, key, msg.value);
     }
 
+    // TODO: Add string reason
+    // TODO: Decide should also work after a time out, in case the attacker
+    //       never reveals a secret
     function decide(uint256 id, bool exit) public {
         Vuln storage vuln = vulns[id];
         require(msg.sender == address(vuln.exploitable));

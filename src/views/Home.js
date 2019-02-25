@@ -161,10 +161,13 @@ class Home extends Component {
                 <Section bgColor="white" color="black">
                     <Header>
                         <Menu alignment={Alignments.RIGHT}>
-                            <MenuItem><a>About</a></MenuItem>
-                            <MenuItem><a>FAQ</a></MenuItem>
-                            <MenuItem><a>Whitepaper</a></MenuItem>
-                            <MenuItem><a>Github</a></MenuItem>
+                            <MenuItem>
+                                <a 
+                                    target="_blank"
+                                    href="https://github.com/0xdefaceme/" >
+                                    GitHub
+                                </a>
+                            </MenuItem>
                         </Menu>
                     </Header>
                     <Wrapper minHeight="80vh">
@@ -175,25 +178,25 @@ class Home extends Component {
                             <Cell small={12} large={6}>
                                 <Headline>
                                     <HeadlineWrapper>
-                                        <h1>Exit gracefully.</h1>
+                                        <h1>Exit fairly.</h1>
                                         <p>
                                             0xdeface.me is a standard to settle
-                                            Ethereum smart contracts gracefully in case
+                                            Ethereum smart contracts fairly in case
                                             of vulnerabilities.
                                         </p>
-                                        <ButtonWrapper disabled>
-                                            <Button
-                                                bgColor="black"
-                                                color="white"
-                                                onClick={() => goTo(views.list, {}, store)}>
-                                                Launch App
-                                            </Button>
-                                            <HollowButton disabled>
-                                                <FontAwesomeIcon
-                                                    icon="external-link-square-alt" />
-                                                {' '}
-                                                Learn more
-                                            </HollowButton>
+                                        <ButtonWrapper>
+                                            <a 
+                                                target="_blank"
+                                                href="https://github.com/0xdefaceme/whitepaper">
+                                                
+                                                <Button
+                                                    bgColor="black"
+                                                    color="white">
+                                                    <FontAwesomeIcon
+                                                        icon="external-link-square-alt" />
+                                                    Read the Whitepaper
+                                                </Button>
+                                            </a>
                                         </ButtonWrapper>
                                     </HeadlineWrapper>
                                 </Headline>
@@ -214,15 +217,19 @@ class Home extends Component {
                             0xdeface a.k.a.{' '}
                             <a target="_blank" href="#">EIP-XXXX</a> is a
                             standard to settle deployed smart contracts
-                            gracefully in favor of users and developers.
+                            fairly in favor of users and developers.
                             Auditors confidentially submit disclosures to
                             0xdeface.me. Contract owners review disclosures.
                             Do auditor and contract owner agree that a serious
                             vulnerability has been found, a contract can be
-                            settled gracefully by returning its users' funds.
+                            settled fairly by returning its users' funds.
                             Auditors get rewarded with a bounty held in
                             escrow by 0xdeface's{' '}
-                            <a target="_blank" href="#">Negotiator</a>.
+                            <a 
+                                target="_blank"
+                                href="https://github.com/0xdefaceme/demo/blob/master/contracts/Negotiator.sol">
+                                Negotiator
+                            </a>.
                         </p>
                         <HR/>
                         <Grid className="display">
@@ -232,7 +239,11 @@ class Home extends Component {
                                     <div>
                                         <p><b>Permissionless</b></p>
                                         0xdeface's{' '}
-                                        <a target="_blank" href="#">Negotiator</a>
+                                        <a 
+                                            target="_blank"
+                                            href="https://github.com/0xdefaceme/demo/blob/master/contracts/Negotiator.sol">
+                                            Negotiator
+                                        </a>
                                         {' '} doesn't have an owner. It
                                         implements an incentive game of
                                         auditors and contract owners.
@@ -279,12 +290,22 @@ class Home extends Component {
                                 target="_blank"
                                 href="https://twitter.com/TimDaub">
                                 Tim Daubenschütz
-                            </a>. It's planned to add a small negotiation
-                            fee into 0xdeface's Negotiator contract for
-                            continued maintenance and development. 0xdeface is
-                            actively looking for funding in form of grants.
-                            For inquiries contact:{' '}
-                            <a href="mailto:tim@0xdeface.me">
+                            </a> and {' '}
+                            <a 
+                                target="_blank"
+                                href="https://twitter.com/vrde">
+                                Alberto Granzotto
+                            </a>.
+                            Check out our{' '}
+                            <a 
+                                target="_blank"
+                                href="https://github.com/0xdefaceme/whitepaper">
+                                whitepaper
+                            </a>.{' '}
+                            0xdeface is actively looking for funding in form of
+                            grants.  For inquiries contact:{' '} 
+                            <a
+                                href="mailto:tim@0xdeface.me">
                                 tim@0xdeface.me
                             </a>
                         </p>
