@@ -45,7 +45,11 @@ class VulnerabilityList extends Component {
     const account = (await web3.eth.getAccounts())[0];
     const exploitable = this.props.store.router.queryParams.exploitable;
     const {vulnerabilities} = this.props.store;
-    await vulnerabilities.filter(web3, account, exploitable);
+    if (exploitable) {
+      await vulnerabilities.filter(web3, account, exploitable);
+    } else {
+      await vulnerabilities.fetchAll(web3, account);
+    }
   }
 
   onFilter() {
