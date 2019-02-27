@@ -1,0 +1,5 @@
+script:
+    - bash ./scripts/deploy.sh
+env:
+    global:
+        - GITHUB_REPO: "0xdefaceme/www"
