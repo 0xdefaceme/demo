@@ -34,7 +34,7 @@ async function boot() {
         router: new RouterStore(),
     }
 
-    startRouter(views, store);
+    startRouter(views, store, {html5history: false});
 
     ReactDOM.render(
         <Provider store={store}>

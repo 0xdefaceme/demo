@@ -16,7 +16,7 @@
     "ipfs-http-client": "^29.1.1",
     "mobx": "^5.9.0",
     "mobx-react": "^5.4.3",
-    "mobx-router": "0.0.19",
+    "mobx-router": "git+https://github.com/TimDaub/mobx-router.git",
     "npm": "^6.8.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
