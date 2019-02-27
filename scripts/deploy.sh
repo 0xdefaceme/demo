@@ -16,7 +16,7 @@ npm i
 npm run build
 
 # deploy
-cd public
+cd dist
 git init
 git add .
 git commit -m "Automatic update from Travis"
