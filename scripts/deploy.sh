@@ -12,6 +12,7 @@ git config --global user.email "auto@deploy.er"
 git config --global user.name "Travis CI"
 
 # build
+npm i
 npm run build
 
 # deploy
