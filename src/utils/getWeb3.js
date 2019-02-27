@@ -1,9 +1,11 @@
 // @format
 import Web3 from 'web3';
 
+import config from '../config';
+
 const resolveWeb3 = resolve => {
   let {web3} = window;
-  const localProvider = `https://rinkeby.infura.io`;
+  const localProvider = config.INFURA_ENDPOINT;
 
   if (window.ethereum) {
     web3 = new Web3(ethereum);
