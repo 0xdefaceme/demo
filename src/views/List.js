@@ -92,7 +92,7 @@ class VulnerabilityList extends Component {
                   <Th>ID</Th>
                   <Th>Status</Th>
                   <Th>Contract address</Th>
-                  <Th>Hunter</Th>
+                  <Th>Attacker</Th>
                   <Th>Actions</Th>
                 </Tr>
               </Thead>
@@ -102,7 +102,7 @@ class VulnerabilityList extends Component {
                     <Td>{vuln.id}</Td>
                     <Td>{vuln.status}</Td>
                     <Td>{vuln.exploitable}</Td>
-                    <Td>{vuln.hunter}</Td>
+                    <Td>{vuln.attacker}</Td>
                     <Td>
                       <Link
                         view={views.pay}

@@ -6,7 +6,7 @@ contract Negotiator {
 
     struct Vuln {
         IExploitable exploitable;
-        address payable hunter;
+        address payable attacker;
         uint256 damage;
         string key;
         uint256 bounty;
@@ -22,7 +22,7 @@ contract Negotiator {
         uint256 indexed id,
         address indexed exploitable,
         uint256 indexed damage,
-        address hunter
+        address attacker
     );
 
     event Reveal(
@@ -54,7 +54,7 @@ contract Negotiator {
 
         id = vulns.push(Vuln({
             exploitable: exploitable,
-            hunter: msg.sender,
+            attacker: msg.sender,
             damage: damage,
             key: "",
             bounty: 0,
@@ -67,7 +67,7 @@ contract Negotiator {
     function reveal(uint256 id, string memory hash) public {
         Vuln storage vuln = vulns[id];
         require(vuln.status == Status.Payed);
-        require(msg.sender == vuln.hunter);
+        require(msg.sender == vuln.attacker);
 
         vuln.hash = hash;
         vuln.status = Status.Revealed;
@@ -98,7 +98,7 @@ contract Negotiator {
         if (exit) {
             vuln.status = Status.Exited;
             vuln.exploitable.exit();
-            vuln.hunter.send(vuln.bounty);
+            vuln.attacker.send(vuln.bounty);
             emit Decide(id, true);
         } else {
             vuln.status = Status.Declined;
