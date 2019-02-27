@@ -1,15 +1,52 @@
 // @format
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
-import {observer, inject} from 'mobx-react';
-import {Link} from 'mobx-router';
-import {Table, Thead, Tbody, Tr, Th, Td} from 'react-super-responsive-table';
-import {Grid, Cell} from 'react-foundation';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import ReactDOM from "react-dom";
+import { observer, inject } from "mobx-react";
+import { Link } from "mobx-router";
+import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
+import { Grid, Cell } from "react-foundation";
+import styled from "styled-components";
 
-import views from '../views';
+import views from "../views";
+import config from "../config";
 
-@inject('store')
+const TableH1 = styled.h1`
+  font-weight: bold;
+  font-size: 1.35em;
+  padding-top: 10px;
+  padding-left: 10px;
+`;
+
+const TableWrapper = styled.div`
+  border: 1px solid #eeeeee;
+  border-radius: 5px;
+  background-color: white;
+`;
+
+const Input = styled.input`
+  margin-bottom: 0;
+  // I'm sorry
+  margin-top: 5px;
+  float: right;
+  width: 60%;
+  border: none;
+  outline: none;
+  box-shadow: inset 0px 0px 0px 0px black;
+  &:focus {
+    border: none;
+    outline: none;
+    box-shadow: inset 0px 0px 0px 0px black;
+  }
+`;
+
+const FlexCenter = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+@inject("store")
 @observer
 class VulnerabilityList extends Component {
   constructor(props) {
@@ -24,7 +61,7 @@ class VulnerabilityList extends Component {
     if (prevState.filter !== this.state.filter) {
       const filter = this.state.filter;
       const {
-        router: {goTo},
+        router: { goTo }
       } = this.props.store;
       goTo(views.list, null, this.props.store, filter);
       this.load();
@@ -35,16 +72,16 @@ class VulnerabilityList extends Component {
     const exploitable = this.props.store.router.queryParams.exploitable;
     this.setState({
       filter: {
-        exploitable,
-      },
+        exploitable
+      }
     });
   }
 
   async load() {
-    const {web3} = this.props.store;
+    const { web3 } = this.props.store;
     const account = (await web3.eth.getAccounts())[0];
     const exploitable = this.props.store.router.queryParams.exploitable;
-    const {vulnerabilities} = this.props.store;
+    const { vulnerabilities } = this.props.store;
     if (exploitable) {
       await vulnerabilities.filter(web3, account, exploitable);
     } else {
@@ -53,90 +90,96 @@ class VulnerabilityList extends Component {
   }
 
   onFilter() {
-    const {web3} = this.props.store;
+    const { web3 } = this.props.store;
     const exploitable = this.refs.filter.value;
     if (exploitable && web3.utils.isAddress(exploitable)) {
       this.setState({
         filter: {
-          exploitable,
-        },
+          exploitable
+        }
       });
     } else {
-      this.setState({filter: {}});
+      this.setState({ filter: {} });
     }
   }
 
   render() {
     const {
-      vulnerabilities: {list},
+      vulnerabilities: { list }
     } = this.props.store;
     return (
       <div>
-        <Grid className="display">
+        <Grid>
           <Cell large={1} />
           <Cell large={10}>
-            <h1>List of Vulnerabilities</h1>
-            <p>
-              <input
-                type="text"
-                ref="filter"
-                onChange={this.onFilter}
-                defaultValue={
-                  this.state.filter && this.state.filter.exploitable
-                }
-                placeholder="filter by contract"
-              />
-            </p>
-            <Link view={views.commit} store={this.props.store}>
-              Commit
-            </Link>
-            <Table>
-              <Thead>
-                <Tr>
-                  <Th>ID</Th>
-                  <Th>Status</Th>
-                  <Th>Contract address</Th>
-                  <Th>Attacker</Th>
-                  <Th>Actions</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {list.map((vuln, i) => (
-                  <Tr key={i}>
-                    <Td>{vuln.id}</Td>
-                    <Td>{vuln.status}</Td>
-                    <Td>{vuln.exploitable}</Td>
-                    <Td>{vuln.attacker}</Td>
-                    <Td>
-                      <Link
-                        view={views.pay}
-                        params={{
-                          id: vuln.id.toString(),
-                        }}
-                        store={this.props.store}>
-                        Pay
-                      </Link>
-                      <Link
-                        view={views.reveal}
-                        params={{
-                          id: vuln.id.toString(),
-                        }}
-                        store={this.props.store}>
-                        Reveal
-                      </Link>
-                      <Link
-                        view={views.decide}
-                        params={{
-                          id: vuln.id.toString(),
-                        }}
-                        store={this.props.store}>
-                        Decide
-                      </Link>
-                    </Td>
+            <TableWrapper>
+              <Grid className="display">
+                <Cell large={6}>
+                  <TableH1>List of Vulnerabilities</TableH1>
+                </Cell>
+                <Cell large={6}>
+                  <Input
+                    type="text"
+                    ref="filter"
+                    onChange={this.onFilter}
+                    defaultValue={
+                      this.state.filter && this.state.filter.exploitable
+                    }
+                    placeholder="filter by contract"
+                  />
+                </Cell>
+              </Grid>
+              <Table>
+                <Thead>
+                  <Tr>
+                    <Th>ID</Th>
+                    <Th>Status</Th>
+                    <Th>Contract address</Th>
+                    <Th>Attacker</Th>
+                    <Th>Actions</Th>
                   </Tr>
-                ))}
-              </Tbody>
-            </Table>
+                </Thead>
+                <Tbody>
+                  {list.map((vuln, i) => (
+                    <Tr key={i}>
+                      <Td>{vuln.id}</Td>
+                      <Td>{vuln.status}</Td>
+                      <Td>{vuln.exploitable}</Td>
+                      <Td>{vuln.attacker}</Td>
+                      <Td>
+                        <Link
+                          view={views.pay}
+                          params={{
+                            id: vuln.id.toString()
+                          }}
+                          store={this.props.store}
+                        >
+                          Pay
+                        </Link>
+                        <Link
+                          view={views.reveal}
+                          params={{
+                            id: vuln.id.toString()
+                          }}
+                          store={this.props.store}
+                        >
+                          Reveal
+                        </Link>
+                        <Link
+                          view={views.decide}
+                          params={{
+                            id: vuln.id.toString()
+                          }}
+                          store={this.props.store}
+                        >
+                          Decide
+                        </Link>
+                      </Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </TableWrapper>
           </Cell>
           <Cell large={1} />
         </Grid>

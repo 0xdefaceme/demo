@@ -1,4 +1,7 @@
 {
     "IPFS_PROVIDER": "ipfs.infura.io",
-    "INFURA_ENDPOINT": "https://rinkeby.infura.io"
+    "INFURA_ENDPOINT": "https://rinkeby.infura.io",
+    "CSS": {
+        "BACKGROUND_COLOR": "#f9fbfd"
+    }
 }

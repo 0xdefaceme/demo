@@ -1,14 +1,17 @@
 // @format
-import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
-import {observer, inject} from 'mobx-react';
-import {Grid, Cell, Menu, MenuItem, Alignments} from 'react-foundation';
-import styled from 'styled-components';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import { observer, inject } from "mobx-react";
+import { Grid, Cell, Menu, MenuItem, Alignments } from "react-foundation";
+import styled from "styled-components";
 
-import views from '../views';
+import views from "../views";
+import config from "../config";
 
-import logo from '../assets/placeholder.png';
+import Nav from "./Nav";
+import { Button } from "../components";
+
+import logo from "../assets/placeholder.png";
 
 const Wrapper = styled.div`
   height: auto;
@@ -42,10 +45,8 @@ const Content = styled.div`
 
 const Logo = styled.img`
   vertical-align: middle;
-  width: 280px;
+  width: 200px;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
 `;
 
 const Headline = styled.div`
@@ -80,17 +81,6 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-const Button = styled.button`
-  display: inline-flex;
-  background-color: ${props => props.bgColor};
-  border: 1px solid white;
-  color: ${props => props.color};
-  padding: 10px;
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
 const HollowButton = styled.button`
   display: inline-flex;
   background-color: ${props => props.bgColor};
@@ -99,18 +89,6 @@ const HollowButton = styled.button`
   padding: 10px;
   &:hover {
     cursor: pointer;
-  }
-`;
-
-const Header = styled.div`
-  height: 10vh;
-  margin-top: 1em;
-  a {
-    color: black;
-    font-size: 1.1em;
-    &:hover {
-      text-decoration: underline;
-    }
   }
 `;
 
@@ -142,26 +120,17 @@ const Section = props => (
   </Background>
 );
 
-@inject('store')
+@inject("store")
 @observer
 class Home extends Component {
   render() {
     const {
-      router: {goTo},
+      router: { goTo }
     } = this.props.store;
-    const {store} = this.props;
+    const { store } = this.props;
     return (
       <div>
-        <Section bgColor="white" color="black">
-          <Header>
-            <Menu alignment={Alignments.RIGHT}>
-              <MenuItem>
-                <a target="_blank" href="https://github.com/0xdefaceme/">
-                  GitHub
-                </a>
-              </MenuItem>
-            </Menu>
-          </Header>
+        <Section bgColor={config.CSS.BACKGROUND_COLOR} color="black">
           <Wrapper minHeight="80vh">
             <Grid className="display">
               <Cell small={12} large={6}>
@@ -178,9 +147,9 @@ class Home extends Component {
                     <ButtonWrapper>
                       <a
                         target="_blank"
-                        href="https://github.com/0xdefaceme/whitepaper">
+                        href="https://github.com/0xdefaceme/whitepaper"
+                      >
                         <Button bgColor="black" color="white">
-                          <FontAwesomeIcon icon="external-link-square-alt" />
                           Read the Whitepaper
                         </Button>
                       </a>
@@ -197,24 +166,25 @@ class Home extends Component {
             <h1>What's 0xdeface?</h1>
             <p>
               A secure protocol for contract owners to act on vulnerabilities
-              and legal way for auditors to earn Ether by disclosing
+              and legal way for attackers to earn Ether by disclosing
               vulnerabilities.
             </p>
             <p>
-              0xdeface a.k.a.{' '}
+              0xdeface a.k.a.{" "}
               <a target="_blank" href="#">
                 EIP-XXXX
-              </a>{' '}
+              </a>{" "}
               is a standard to settle deployed smart contracts fairly in favor
               of users and developers. Auditors confidentially submit
               disclosures to 0xdeface.me. Contract owners review disclosures. Do
-              auditor and contract owner agree that a serious vulnerability has
-              been found, a contract can be settled fairly by returning its
+              attackers and contract owner agree that a serious vulnerability
+              has been found, a contract can be settled fairly by returning its
               users' funds. Auditors get rewarded with a bounty held in escrow
-              by 0xdeface's{' '}
+              by 0xdeface's{" "}
               <a
                 target="_blank"
-                href="https://github.com/0xdefaceme/demo/blob/master/contracts/Negotiator.sol">
+                href="https://github.com/0xdefaceme/demo/blob/master/contracts/Negotiator.sol"
+              >
                 Negotiator
               </a>
               .
@@ -228,14 +198,15 @@ class Home extends Component {
                     <p>
                       <b>Permissionless</b>
                     </p>
-                    0xdeface's{' '}
+                    0xdeface's{" "}
                     <a
                       target="_blank"
-                      href="https://github.com/0xdefaceme/demo/blob/master/contracts/Negotiator.sol">
+                      href="https://github.com/0xdefaceme/demo/blob/master/contracts/Negotiator.sol"
+                    >
                       Negotiator
-                    </a>{' '}
+                    </a>{" "}
                     doesn't have an owner. It implements an incentive game of
-                    auditors and contract owners. Owners are in full control of
+                    attackers and contract owners. Owners are in full control of
                     their contracts.
                   </div>
                 </Bullet>
@@ -248,7 +219,7 @@ class Home extends Component {
                       <b>Fair</b>
                     </p>
                     User's don't lose their funds, developers don't lose their
-                    cred and auditors get rewarded fairly in Ether.
+                    cred and attackers get rewarded fairly in Ether.
                   </div>
                 </Bullet>
               </Cell>
@@ -259,45 +230,46 @@ class Home extends Component {
                     <p>
                       <b>Canonical</b>
                     </p>
-                    0xdeface.me is building the{' '}
+                    0xdeface.me is building the{" "}
                     <a target="_blank" href="#">
                       EIP-XXXX
-                    </a>{' '}
+                    </a>{" "}
                     standard. Developers are invited to implement its interface.
-                    Only then are auditors allowed to submit vulnerabilities.
+                    Only then are attackers allowed to submit vulnerabilities.
                   </div>
                 </Bullet>
               </Cell>
             </Grid>
           </Content>
         </Section>
-        <Section content bgColor="white" color="black">
+        <Section content bgColor={config.CSS.BACKGROUND_COLOR} color="black">
           <Content color="black" height="auto">
             <h1>Funding</h1>
             <p>
-              0xdeface is being build by{' '}
+              0xdeface is being build by{" "}
               <a target="_blank" href="https://twitter.com/TimDaub">
                 Tim Daubenschütz
-              </a>{' '}
-              and{' '}
+              </a>{" "}
+              and{" "}
               <a target="_blank" href="https://twitter.com/vrde">
                 Alberto Granzotto
               </a>
-              . Check out our{' '}
+              . Check out our{" "}
               <a
                 target="_blank"
-                href="https://github.com/0xdefaceme/whitepaper">
+                href="https://github.com/0xdefaceme/whitepaper"
+              >
                 whitepaper
               </a>
               . 0xdeface is actively looking for funding in form of grants. For
-              inquiries contact:{' '}
+              inquiries contact:{" "}
               <a href="mailto:tim@0xdeface.me">tim@0xdeface.me</a>
             </p>
             <HR />
             <h1>Contribute</h1>
             <p>
               Currently, the standard and marketplace are in very early stages
-              of development. If you'd like to contribute anyways, email{' '}
+              of development. If you'd like to contribute anyways, email{" "}
               <a href="mailto:tim@0xdeface.me">tim@0xdeface.me</a>.
             </p>
           </Content>
