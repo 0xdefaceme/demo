@@ -9,7 +9,9 @@ git config --global user.email "auto@deploy.er"
 git config --global user.name "Travis CI"
 
 # build
+npm i -g truffle
 npm i
+truffle compile
 npm run build
 
 # deploy
