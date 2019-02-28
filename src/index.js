@@ -5,8 +5,6 @@ import ReactDOM from "react-dom";
 import { Provider } from "mobx-react";
 import { MobxRouter, RouterStore, startRouter, Route } from "mobx-router";
 import ipfsClient from "ipfs-http-client";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "foundation-sites/dist/css/foundation.min.css";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";

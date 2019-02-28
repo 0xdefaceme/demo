@@ -5,7 +5,6 @@ import { observer, inject } from "mobx-react";
 import { Link } from "mobx-router";
 import styled from "styled-components";
 import { Grid, Cell, Menu, MenuItem, Alignments } from "react-foundation";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import views from "../views";
 import { Button } from "../components";
@@ -83,9 +82,7 @@ class Nav extends Component {
               <Menu alignment={Alignments.RIGHT}>
                 <MenuItem>
                   <Button
-                    onClick={() =>
-                      goTo(views.commit, null, this.props.store)
-                    }
+                    onClick={() => goTo(views.commit, null, this.props.store)}
                     bgColor="black"
                     color="white"
                   >
