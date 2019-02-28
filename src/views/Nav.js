@@ -32,11 +32,11 @@ const Logo = styled.img`
 @observer
 class Nav extends Component {
   render() {
-    const { path } = this.props.store.router.currentView;
+    const { currentPath } = this.props.store.router;
     const { goTo } = this.props.store.router;
 
     // Landing page menu
-    if (path === "/") {
+    if (currentPath === "/") {
       return (
         <Header>
           <Grid className="display">
