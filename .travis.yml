@@ -13,6 +13,7 @@ deploy:
     github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
     keep-history: true
     repo: 0xdefaceme/www
+    fqdn: 0xdeface.me
     target-branch: master
     on:
         branch: master
