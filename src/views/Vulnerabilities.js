@@ -205,12 +205,12 @@ class VulnerabilityList extends Component {
                 </Tbody>
               </Table>
             </TableWrapper>
+            Use these addresses for testing on Rinkeby. Negotiator:{" "}
+            {config.RINKEBY_TEST.NEGOTIATOR} Exploitable:{" "}
+            {config.RINKEBY_TEST.EXPLOITABLE}
           </Cell>
           <Cell large={1} />
         </Grid>
-        Use these addresses for testing on Rinkeby:
-        0x2b1D000b5AdF0A7423727EfcC27878839DC0730E (Negotiator),
-        0x93a62ca8F119c7F1a87d05A1cc8CC353fd68a3E5 (Exploitable)
       </div>
     );
   }

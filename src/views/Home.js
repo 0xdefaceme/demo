@@ -82,6 +82,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const HollowButton = styled.button`
+  border-radius: 5px;
   display: inline-flex;
   background-color: ${props => props.bgColor};
   color: ${props => props.color};
