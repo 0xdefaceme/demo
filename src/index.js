@@ -8,6 +8,7 @@ import ipfsClient from "ipfs-http-client";
 
 import "foundation-sites/dist/css/foundation.min.css";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
+import "highlight.js/styles/solarized-light.css";
 
 import views from "./views";
 import getWeb3 from "./utils/getWeb3";

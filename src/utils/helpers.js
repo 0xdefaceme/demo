@@ -1,5 +1,7 @@
 // @format
+import React from "react";
 import config from "../config";
+import { Label } from "../components";
 
 export function shortenAddress(value) {
   if (value && typeof value === "string") {
@@ -38,5 +40,21 @@ export function shortenBalance(value) {
     return value + decimals;
   } else {
     return value;
+  }
+}
+
+export function statusToLabel(status) {
+  status = parseInt(status, 10);
+  switch (status) {
+    case 0:
+      return <Label bgColor={config.CSS.COMMITTED}>Committed</Label>;
+    case 1:
+      return <Label bgColor={config.CSS.PAID}>Paid</Label>;
+    case 2:
+      return <Label bgColor={config.CSS.REVEALED}>Revealed</Label>;
+    case 3:
+      return <Label bgColor={config.CSS.EXITED}>Exited</Label>;
+    case 4:
+      return <Label bgColor={config.CSS.DECLINED}>Declined</Label>;
   }
 }

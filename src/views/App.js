@@ -4,7 +4,6 @@ import ReactDOM from "react-dom";
 import { observer, inject } from "mobx-react";
 import { Grid, Cell } from "react-foundation";
 import { createGlobalStyle } from "styled-components";
-import ReactTooltip from "react-tooltip";
 
 import Nav from "./Nav";
 
@@ -22,6 +21,10 @@ const GlobalStyle = createGlobalStyle`
     tbody td, thead th {
       text-align: center;
     }
+    // We cannot do this as overflow-y: scroll doesn't put border-radius :(
+    //.hljs {
+    //  border-radius: 5px;
+    //}
 `;
 
 class App extends Component {
@@ -30,7 +33,6 @@ class App extends Component {
     return (
       <div>
         <GlobalStyle />
-        <ReactTooltip place="top" type="dark" effect="float" />
         <Nav />
         {children}
       </div>

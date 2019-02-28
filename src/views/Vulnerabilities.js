@@ -11,8 +11,11 @@ import ReactTooltip from "react-tooltip";
 
 import views from "../views";
 import config from "../config";
-import { Label } from "../components";
-import { shortenAddress, shortenBalance } from "../utils/helpers";
+import {
+  shortenAddress,
+  shortenBalance,
+  statusToLabel
+} from "../utils/helpers";
 
 const TableH1 = styled.h1`
   font-weight: bold;
@@ -97,26 +100,6 @@ class VulnerabilityList extends Component {
       });
     } else {
       this.setState({ filter: {} });
-    }
-  }
-
-  transformStatus(status) {
-    status = parseInt(status, 10);
-    switch (status) {
-      case 0:
-        return (
-          <Label bgColor={config.CSS.COMMITTED} color="white">
-            Committed
-          </Label>
-        );
-      case 1:
-        return <Label bgColor={config.CSS.PAID}>Paid</Label>;
-      case 2:
-        return <Label bgColor={config.CSS.REVEALED}>Revealed</Label>;
-      case 3:
-        return <Label bgColor={config.CSS.EXITED}>Exited</Label>;
-      case 4:
-        return <Label bgColor={config.CSS.DECLINED}>Declined</Label>;
     }
   }
 
@@ -205,7 +188,7 @@ class VulnerabilityList extends Component {
                         </span>
                         <ReactTooltip place="top" type="dark" effect="solid" />
                       </Td>
-                      <Td>{this.transformStatus(vuln.status)}</Td>
+                      <Td>{statusToLabel(vuln.status)}</Td>
                       <Td>
                         <Link
                           view={views.view}

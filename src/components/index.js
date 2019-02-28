@@ -26,4 +26,8 @@ const Label = styled.div`
   border-radius: 5px;
 `;
 
-export { Button, Label };
+const HR = styled.div`
+  border-top: 1px dashed ${props => props.color};
+`;
+
+export { Button, Label, HR };

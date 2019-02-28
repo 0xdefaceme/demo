@@ -9,7 +9,7 @@ import views from "../views";
 import config from "../config";
 
 import Nav from "./Nav";
-import { Button } from "../components";
+import { Button, HR } from "../components";
 
 import logo from "../assets/placeholder.png";
 
@@ -95,10 +95,6 @@ const HollowButton = styled.button`
 const Background = styled.div`
   background-color: ${props => props.bgColor};
   color: ${props => props.color};
-`;
-
-const HR = styled.div`
-  border-top: 1px dashed ${props => props.color};
 `;
 
 const Bullet = styled.div`
