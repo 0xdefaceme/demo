@@ -4,9 +4,6 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" != "master" ]; then e
 
 set -o errexit
 
-rm -rf public
-mkdir public
-
 # config
 git config --global user.email "auto@deploy.er"
 git config --global user.name "Travis CI"
