@@ -7,15 +7,18 @@ import { Link } from "mobx-router";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import { Grid, Cell } from "react-foundation";
 import styled from "styled-components";
+import ReactTooltip from "react-tooltip";
 
 import views from "../views";
 import config from "../config";
+import { Label } from "../components";
+import { shortenAddress, shortenBalance } from "../utils/helpers";
 
 const TableH1 = styled.h1`
   font-weight: bold;
   font-size: 1.35em;
   padding-top: 10px;
-  padding-left: 10px;
+  padding-left: 20px;
 `;
 
 const TableWrapper = styled.div`
@@ -38,12 +41,6 @@ const Input = styled.input`
     outline: none;
     box-shadow: inset 0px 0px 0px 0px black;
   }
-`;
-
-const FlexCenter = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 @inject("store")
@@ -103,10 +100,32 @@ class VulnerabilityList extends Component {
     }
   }
 
+  transformStatus(status) {
+    status = parseInt(status, 10);
+    switch (status) {
+      case 0:
+        return (
+          <Label bgColor={config.CSS.COMMITTED} color="white">
+            Committed
+          </Label>
+        );
+      case 1:
+        return <Label bgColor={config.CSS.PAID}>Paid</Label>;
+      case 2:
+        return <Label bgColor={config.CSS.REVEALED}>Revealed</Label>;
+      case 3:
+        return <Label bgColor={config.CSS.EXITED}>Exited</Label>;
+      case 4:
+        return <Label bgColor={config.CSS.DECLINED}>Declined</Label>;
+    }
+  }
+
   render() {
     const {
-      vulnerabilities: { list }
+      vulnerabilities: { list },
+      web3
     } = this.props.store;
+
     return (
       <div>
         <Grid>
@@ -125,7 +144,7 @@ class VulnerabilityList extends Component {
                     defaultValue={
                       this.state.filter && this.state.filter.exploitable
                     }
-                    placeholder="filter by contract"
+                    placeholder="filter by contract address"
                   />
                 </Cell>
               </Grid>
@@ -133,9 +152,12 @@ class VulnerabilityList extends Component {
                 <Thead>
                   <Tr>
                     <Th>ID</Th>
-                    <Th>Status</Th>
-                    <Th>Contract address</Th>
+                    <Th>Contract</Th>
                     <Th>Attacker</Th>
+                    <Th>Balance (ETH)</Th>
+                    <Th>Damage (ETH)</Th>
+                    <Th>Bounty (ETH)</Th>
+                    <Th>Status</Th>
                     <Th>Actions</Th>
                   </Tr>
                 </Thead>
@@ -143,36 +165,56 @@ class VulnerabilityList extends Component {
                   {list.map((vuln, i) => (
                     <Tr key={i}>
                       <Td>{vuln.id}</Td>
-                      <Td>{vuln.status}</Td>
-                      <Td>{vuln.exploitable}</Td>
-                      <Td>{vuln.attacker}</Td>
+                      <Td>
+                        <a
+                          data-tip={vuln.exploitable}
+                          target="_blank"
+                          href={
+                            "https://etherscan.io/address/" + vuln.exploitable
+                          }
+                        >
+                          {shortenAddress(vuln.exploitable)}
+                        </a>
+                        <ReactTooltip place="top" type="dark" effect="solid" />
+                      </Td>
+                      <Td>
+                        <a
+                          data-tip={vuln.attacker}
+                          target="_blank"
+                          href={"https://etherscan.io/address/" + vuln.attacker}
+                        >
+                          {shortenAddress(vuln.attacker)}
+                        </a>
+                        <ReactTooltip place="top" type="dark" effect="solid" />
+                      </Td>
+                      <Td>
+                        <span data-tip={web3.utils.fromWei(vuln.balance)}>
+                          {shortenBalance(web3.utils.fromWei(vuln.balance))}
+                        </span>
+                        <ReactTooltip place="top" type="dark" effect="solid" />
+                      </Td>
+                      <Td>
+                        <span data-tip={web3.utils.fromWei(vuln.damage)}>
+                          {shortenBalance(web3.utils.fromWei(vuln.damage))}
+                        </span>
+                        <ReactTooltip place="top" type="dark" effect="solid" />
+                      </Td>
+                      <Td>
+                        <span data-tip={web3.utils.fromWei(vuln.bounty)}>
+                          {shortenBalance(web3.utils.fromWei(vuln.bounty))}
+                        </span>
+                        <ReactTooltip place="top" type="dark" effect="solid" />
+                      </Td>
+                      <Td>{this.transformStatus(vuln.status)}</Td>
                       <Td>
                         <Link
-                          view={views.pay}
+                          view={views.view}
                           params={{
                             id: vuln.id.toString()
                           }}
                           store={this.props.store}
                         >
-                          Pay
-                        </Link>
-                        <Link
-                          view={views.reveal}
-                          params={{
-                            id: vuln.id.toString()
-                          }}
-                          store={this.props.store}
-                        >
-                          Reveal
-                        </Link>
-                        <Link
-                          view={views.decide}
-                          params={{
-                            id: vuln.id.toString()
-                          }}
-                          store={this.props.store}
-                        >
-                          Decide
+                          View
                         </Link>
                       </Td>
                     </Tr>

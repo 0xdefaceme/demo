@@ -14,7 +14,7 @@ contract Negotiator {
         Status status;
     }
 
-    enum Status {Commited, Payed, Revealed, Exited, Declined}
+    enum Status {Commited, Paid, Revealed, Exited, Declined}
 
     Vuln[] public vulns;
 
@@ -66,7 +66,7 @@ contract Negotiator {
 
     function reveal(uint256 id, string memory hash) public {
         Vuln storage vuln = vulns[id];
-        require(vuln.status == Status.Payed);
+        require(vuln.status == Status.Paid);
         require(msg.sender == vuln.attacker);
 
         vuln.hash = hash;
@@ -83,7 +83,7 @@ contract Negotiator {
 
         vuln.key = key; 
         vuln.bounty = msg.value;
-        vuln.status = Status.Payed;
+        vuln.status = Status.Paid;
         emit Pay(id, key, msg.value);
     }
 

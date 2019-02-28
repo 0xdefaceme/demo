@@ -15,4 +15,15 @@ const Button = styled.button`
   }
 `;
 
-export { Button };
+const Label = styled.div`
+  text-align: center;
+  padding: 0.1em;
+  background-color: ${props => props.bgColor};
+  //color: ${props => props.color};
+  color: white;
+  font-size: 0.8em;
+  font-weight: bold;
+  border-radius: 5px;
+`;
+
+export { Button, Label };

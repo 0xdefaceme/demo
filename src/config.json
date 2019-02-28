@@ -1,7 +1,13 @@
 {
     "IPFS_PROVIDER": "ipfs.infura.io",
     "INFURA_ENDPOINT": "https://rinkeby.infura.io",
+    "DECIMAL_PLACES": 2,
     "CSS": {
-        "BACKGROUND_COLOR": "#f9fbfd"
+        "BACKGROUND_COLOR": "#f9fbfd",
+        "COMMITTED": "#FFEB3B",
+        "PAID": "#FF9800",
+        "REVEALED": "#FF5722",
+        "EXITED": "#4CAF50",
+        "DECLINED": "#F44336"
     }
 }
