@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import { observer, inject } from "mobx-react";
 import { Grid, Cell, Menu, MenuItem, Alignments } from "react-foundation";
 import styled from "styled-components";
+import { Link } from "mobx-router";
 
 import views from "../views";
 import config from "../config";
@@ -150,6 +151,11 @@ class Home extends Component {
                           Read the Whitepaper
                         </Button>
                       </a>
+                      <Link view={views.list} store={this.props.store}>
+                        <HollowButton bgColor="white" color="black">
+                          Test the demo
+                        </HollowButton>
+                      </Link>
                     </ButtonWrapper>
                   </HeadlineWrapper>
                 </Headline>

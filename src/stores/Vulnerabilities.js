@@ -16,10 +16,17 @@ class Vulnerabilities {
 
   async contract(web3) {
     const networkId = await web3.eth.net.getId();
-    return new web3.eth.Contract(
-      Negotiator.abi,
-      Negotiator.networks[networkId].address || config.RINKEBY_TEST.NEGOTIATOR
-    );
+    if (Negotiator.networks[networkId]) {
+      return new web3.eth.Contract(
+        Negotiator.abi,
+        Negotiator.networks[networkId].address
+      );
+    } else {
+      return new web3.eth.Contract(
+        Negotiator.abi,
+        config.RINKEBY_TEST.NEGOTIATOR
+      );
+    }
   }
 
   filter = flow(function*(web3, account, exploitable) {
