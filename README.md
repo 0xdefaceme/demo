@@ -1,5 +1,7 @@
 # 0xdeface.me Demo Monorepo
 
+[![Build Status](https://travis-ci.com/0xdefaceme/demo.svg?branch=master)](https://travis-ci.com/0xdefaceme/demo)
+
 We're currently developing a demo of the 0xdeface protocol in this repository.
 To allow for easier debugging and development, all components are in here. In
 the future, we'll probably split out components into reusable chunks.
