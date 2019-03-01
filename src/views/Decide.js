@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { observer, inject } from "mobx-react";
 
+import views from "../views";
 import config from "../config";
 
 @inject("router", "web3", "account", "vulnerability")
@@ -27,6 +28,7 @@ class Decide extends Component {
       const { web3, vulnerability, account, router } = this.props;
       const id = router.params.id;
       await vulnerability.decide(web3, account, id, exit);
+      router.goTo(views.list, null, { router });
     };
   }
 

@@ -102,9 +102,10 @@ const Footer = styled.div`
   border-right: 1px solid #eeeeee;
   background-color: white;
   margin-bottom: 2em;
-  height: 3em;
+  height: 3.5em;
   & ${Button} {
     float: right;
+    margin-top: 0.5em;
     margin-right: 0.5em;
   }
 `;

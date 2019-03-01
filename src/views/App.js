@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
       background-color: ${config.CSS.BACKGROUND_COLOR};
       background: ${config.CSS.BACKGROUND_COLOR};
     }
-    table {
+    table, textarea {
       margin-bottom: 0;
     }
     tbody td, thead th {

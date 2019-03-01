@@ -5,6 +5,7 @@ import { observer, inject } from "mobx-react";
 import { Grid, Cell } from "react-foundation";
 import styled from "styled-components";
 
+import views from "../views";
 import { Button, Header, Disclaimer, Form, Footer, Input } from "../components";
 
 const PrivateKeyWrapper = styled.div`
@@ -54,6 +55,7 @@ class Pay extends Component {
     const id = router.params.id;
     await vulnerability.pay(web3, account, id);
     await vulnerability.compute(web3, account, id);
+    router.goTo(views.list, null, { router });
   }
 
   render() {
