@@ -1,36 +1,57 @@
-// @format
 import Web3 from "web3";
 
-import config from "../config";
-
-const resolveWeb3 = resolve => {
-  let { web3 } = window;
-  const localProvider = `https://${config.TARGET_NETWORK}.infura.io`;
+function resolveWeb3(resolve, reject, localProvider, authentication) {
+  let web3;
 
   if (window.ethereum) {
-    web3 = new Web3(ethereum);
-    try {
-      window.ethereum.enable().then(() => resolve(web3));
-    } catch (err) {
-      alert(err);
+    web3 = new Web3(window.ethereum);
+    if (authentication === true) {
+      try {
+        window.ethereum.enable().then(() => resolve(web3));
+      } catch (err) {
+        reject(err);
+        console.log(err);
+      }
+    } else {
+      resolve(web3);
     }
   } else if (window.web3) {
-    web3 = new Web3(web3.currentProvider);
+    web3 = new Web3(window.web3.currentProvider);
+    resolve(web3);
   } else {
-    const provider = new Web3.providers.HttpProvider(localProvider);
-    web3 = new Web3(provider);
+    if (authentication === true) {
+      reject(new Error(
+        "Non-Ethereum browser detected. Cannot work in authenticated mode"
+      ));
+    }
+    web3 = new Web3(localProvider);
+    console.log(`Non-Ethereum browser detected. Using ${localProvider}.`);
+    resolve(web3);
   }
-  resolve(web3);
-};
+}
 
-export default () =>
-  new Promise(resolve => {
-    // Wait for loading completion to avoid race conditions with web3 injection timing.
-    window.addEventListener(`load`, () => {
-      resolveWeb3(resolve);
+function _getWeb3(localProvider, authentication) {
+  if (localProvider === undefined) {
+    localProvider =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:8545"
+        : "https://rinkeby.infura.io/";
+  }
+
+  return new Promise((resolve, reject) => {
+    window.addEventListener("load", () => {
+      resolveWeb3(resolve, reject, localProvider, authentication);
     });
-    // If document has loaded already, try to get Web3 immediately.
-    if (document.readyState === `complete`) {
-      resolveWeb3(resolve);
+    if (document.readyState === "complete") {
+      resolveWeb3(resolve, reject, localProvider, authentication);
     }
   });
+}
+
+export function getWeb3(localProvider) {
+  return _getWeb3(localProvider, true);
+}
+
+export function getWeb3Anon(localProvider) {
+  return _getWeb3(localProvider, false);
+}

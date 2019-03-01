@@ -11,7 +11,7 @@ import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import "highlight.js/styles/solarized-light.css";
 
 import views from "./views";
-import getWeb3 from "./utils/getWeb3";
+import { getWeb3, getWeb3Anon } from "./utils/getWeb3";
 import config from "./config";
 
 import App from "./views/App";
@@ -20,7 +20,13 @@ import Vulnerabilities from "./stores/Vulnerabilities";
 import Vulnerability from "./stores/Vulnerability";
 
 async function boot() {
-  const web3 = await getWeb3();
+  let web3;
+  try {
+    web3 = await getWeb3();
+  } catch (err) {
+    console.log(err);
+    web3 = await getWeb3Anon();
+  }
   const account = (await web3.eth.getAccounts())[0];
   const ipfs = ipfsClient(config.IPFS_PROVIDER, "5001", { protocol: "https" });
 
