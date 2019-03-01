@@ -3,7 +3,6 @@ node_js:
     - "11.6.0"
 script:
     - npm i -g truffle
-    - npm i
     - truffle compile
     - npm run build
 deploy:
