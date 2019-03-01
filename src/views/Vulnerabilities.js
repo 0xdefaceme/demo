@@ -153,7 +153,13 @@ class VulnerabilityList extends Component {
                           data-tip={vuln.exploitable}
                           target="_blank"
                           href={
-                            "https://etherscan.io/address/" + vuln.exploitable
+                            config.TARGET_NETWORK !== "mainnet"
+                              ? "https://" +
+                                config.TARGET_NETWORK +
+                                ".etherscan.io/address/" +
+                                vuln.exploitable
+                              : "https://etherscan.io/address/" +
+                                vuln.exploitable
                           }
                         >
                           {shortenAddress(vuln.exploitable)}
@@ -164,7 +170,14 @@ class VulnerabilityList extends Component {
                         <a
                           data-tip={vuln.attacker}
                           target="_blank"
-                          href={"https://etherscan.io/address/" + vuln.attacker}
+                          href={
+                            config.TARGET_NETWORK !== "mainnet"
+                              ? "https://" +
+                                config.TARGET_NETWORK +
+                                ".etherscan.io/address/" +
+                                vuln.attacker
+                              : "https://etherscan.io/address/" + vuln.attacker
+                          }
                         >
                           {shortenAddress(vuln.attacker)}
                         </a>
