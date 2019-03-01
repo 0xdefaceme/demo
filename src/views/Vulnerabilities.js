@@ -46,7 +46,7 @@ const Input = styled.input`
   }
 `;
 
-@inject("store")
+@inject("router", "web3", "account", "vulnerabilities")
 @observer
 class VulnerabilityList extends Component {
   constructor(props) {
@@ -60,16 +60,15 @@ class VulnerabilityList extends Component {
   async componentDidUpdate(prevProps, prevState) {
     if (prevState.filter !== this.state.filter) {
       const filter = this.state.filter;
-      const {
-        router: { goTo }
-      } = this.props.store;
-      goTo(views.list, null, this.props.store, filter);
+      const { router } = this.props;
+      router.goTo(views.list, null, { router }, filter);
       this.load();
     }
   }
 
   async componentDidMount() {
-    const exploitable = this.props.store.router.queryParams.exploitable;
+    const { router } = this.props;
+    const exploitable = router.queryParams.exploitable;
     this.setState({
       filter: {
         exploitable
@@ -78,10 +77,8 @@ class VulnerabilityList extends Component {
   }
 
   async load() {
-    const { web3 } = this.props.store;
-    const account = (await web3.eth.getAccounts())[0];
-    const exploitable = this.props.store.router.queryParams.exploitable;
-    const { vulnerabilities } = this.props.store;
+    const { router, web3, account, vulnerabilities } = this.props;
+    const exploitable = router.queryParams.exploitable;
     if (exploitable) {
       await vulnerabilities.filter(web3, account, exploitable);
     } else {
@@ -90,7 +87,7 @@ class VulnerabilityList extends Component {
   }
 
   onFilter() {
-    const { web3 } = this.props.store;
+    const { web3 } = this.props;
     const exploitable = this.refs.filter.value;
     if (exploitable && web3.utils.isAddress(exploitable)) {
       this.setState({
@@ -106,8 +103,9 @@ class VulnerabilityList extends Component {
   render() {
     const {
       vulnerabilities: { list },
-      web3
-    } = this.props.store;
+      web3,
+      router
+    } = this.props;
 
     return (
       <div>
@@ -208,7 +206,7 @@ class VulnerabilityList extends Component {
                           params={{
                             id: vuln.id.toString()
                           }}
-                          store={this.props.store}
+                          store={{ router }}
                         >
                           View
                         </Link>

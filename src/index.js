@@ -20,14 +20,15 @@ import Vulnerabilities from "./stores/Vulnerabilities";
 import Vulnerability from "./stores/Vulnerability";
 
 async function boot() {
-  let web3;
+  let web3, account;
   try {
     web3 = await getWeb3();
+    account = (await web3.eth.getAccounts())[0];
   } catch (err) {
     console.log(err);
     web3 = await getWeb3Anon();
+    account = "";
   }
-  const account = (await web3.eth.getAccounts())[0];
   const ipfs = ipfsClient(config.IPFS_PROVIDER, "5001", { protocol: "https" });
 
   const store = {
@@ -42,7 +43,10 @@ async function boot() {
   startRouter(views, store, { html5history: false });
 
   ReactDOM.render(
-    <Provider store={store}>
+    // NOTE: We inject `store` here as mobx will otherwise throw an error. We're
+    // however only injecting individual stores and never the global store in
+    // the views!
+    <Provider store={store} {...store}>
       <App>
         <MobxRouter />
       </App>

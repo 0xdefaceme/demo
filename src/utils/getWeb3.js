@@ -1,5 +1,7 @@
 import Web3 from "web3";
 
+import config from "../config";
+
 function resolveWeb3(resolve, reject, localProvider, authentication) {
   let web3;
 
@@ -35,7 +37,7 @@ function _getWeb3(localProvider, authentication) {
     localProvider =
       process.env.NODE_ENV === "development"
         ? "http://localhost:8545"
-        : "https://rinkeby.infura.io/";
+        : "https://"+config.TARGET_NETWORK+".infura.io";
   }
 
   return new Promise((resolve, reject) => {

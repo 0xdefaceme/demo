@@ -118,14 +118,14 @@ const Section = props => (
   </Background>
 );
 
-@inject("store")
+@inject("router")
 @observer
 class Home extends Component {
   render() {
     const {
       router: { goTo }
-    } = this.props.store;
-    const { store } = this.props;
+    } = this.props;
+    const { router } = this.props;
     return (
       <div>
         <Section bgColor={config.CSS.BACKGROUND_COLOR} color="black">
@@ -151,7 +151,7 @@ class Home extends Component {
                           Read the Whitepaper
                         </Button>
                       </a>
-                      <Link view={views.list} store={this.props.store}>
+                      <Link view={views.list} store={{ router }}>
                         <HollowButton bgColor="white" color="black">
                           Test the demo
                         </HollowButton>

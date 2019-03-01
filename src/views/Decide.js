@@ -1,11 +1,11 @@
 //@format
-import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
-import {observer, inject} from 'mobx-react';
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import { observer, inject } from "mobx-react";
 
-import config from '../config';
+import config from "../config";
 
-@inject('store')
+@inject("router", "web3", "account", "vulnerability")
 @observer
 class Decide extends Component {
   constructor(props) {
@@ -15,31 +15,29 @@ class Decide extends Component {
   }
 
   async onDecrypt() {
-    const id = this.props.store.router.params.id;
+    const { web3, vulnerability, account, router } = this.props;
+    const id = router.params.id;
     const key = this.refs.key.value;
-    const {hash} = this.props.store.vulnerability;
-    const {web3, vulnerability, account} = this.props.store;
+    const { hash } = vulnerability;
     await vulnerability.decrypt(web3, account, id, key);
   }
 
   onDecide(exit) {
     return async () => {
-      const id = this.props.store.router.params.id;
-      const {web3, vulnerability, account} = this.props.store;
+      const { web3, vulnerability, account, router } = this.props;
+      const id = router.params.id;
       await vulnerability.decide(web3, account, id, exit);
     };
   }
 
   async componentDidMount() {
-    const id = this.props.store.router.params.id;
-    const {web3} = this.props.store;
-    const account = (await web3.eth.getAccounts())[0];
-    const {vulnerability} = this.props.store;
+    const { web3, vulnerability, account, router } = this.props;
+    const id = router.params.id;
     await vulnerability.fetch(web3, account, id);
   }
 
   render() {
-    const {vulnerability} = this.props.store;
+    const { vulnerability } = this.props;
     return (
       <div>
         <p>Hash: {vulnerability.hash}</p>

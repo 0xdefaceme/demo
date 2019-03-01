@@ -1,24 +1,24 @@
 // @format
-import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
-import {observer, inject} from 'mobx-react';
-import ReactMde from 'react-mde';
-import * as Showdown from 'showdown';
-import 'react-mde/lib/styles/css/react-mde-all.css';
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import { observer, inject } from "mobx-react";
+import ReactMde from "react-mde";
+import * as Showdown from "showdown";
+import "react-mde/lib/styles/css/react-mde-all.css";
 
-@inject('store')
+@inject("router", "web3", "ipfs", "account", "vulnerability")
 @observer
 class Reveal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: '# Vulnerability description',
+      value: "# Vulnerability description"
     };
     this.converter = new Showdown.Converter({
       tables: true,
       simplifiedAutoLink: true,
       strikethrough: true,
-      tasklists: true,
+      tasklists: true
     });
 
     this.handleValueChange = this.handleValueChange.bind(this);
@@ -26,14 +26,13 @@ class Reveal extends Component {
   }
 
   async onReveal() {
-    const id = this.props.store.router.params.id;
-    const {web3, ipfs, account} = this.props.store;
-    const {vulnerability} = this.props.store;
+    const { router, web3, ipfs, account, vulnerability } = this.props;
+    const id = router.params.id;
     await vulnerability.reveal(web3, ipfs, account, id, this.state.value);
   }
 
   handleValueChange(value) {
-    this.setState({value});
+    this.setState({ value });
   }
 
   render() {

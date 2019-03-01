@@ -90,7 +90,7 @@ const Input = styled.input`
   }
 `;
 
-@inject("store")
+@inject("account", "web3", "vulnerabilities")
 @observer
 class Commit extends Component {
   constructor(props) {
@@ -103,14 +103,13 @@ class Commit extends Component {
     const exploitable = this.refs.exploitable.value;
     let damage = this.refs.damage.value;
 
-    const { web3, account } = this.props.store;
-    const { vulnerabilities } = this.props.store;
+    const { vulnerabilities, web3, account } = this.props;
     damage = web3.utils.toWei(damage, "ether");
     await vulnerabilities.commit(web3, account, exploitable, damage);
   }
 
   render() {
-    const { account } = this.props.store;
+    const { account } = this.props;
     return (
       <Grid>
         <Cell large={3} />

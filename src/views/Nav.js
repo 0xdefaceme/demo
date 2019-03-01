@@ -28,12 +28,12 @@ const Logo = styled.img`
   height: 2em;
 `;
 
-@inject("store")
+@inject("router")
 @observer
 class Nav extends Component {
   render() {
-    const { currentPath } = this.props.store.router;
-    const { goTo } = this.props.store.router;
+    const { router } = this.props;
+    const { currentPath, goTo } = router;
 
     // Landing page menu
     if (currentPath === "/") {
@@ -67,12 +67,12 @@ class Nav extends Component {
                   <Logo src={logo} />
                 </MenuItem>
                 <MenuItem>
-                  <Link view={views.home} store={this.props.store}>
+                  <Link view={views.home} store={{ router }}>
                     Home
                   </Link>
                 </MenuItem>
                 <MenuItem>
-                  <Link view={views.list} store={this.props.store}>
+                  <Link view={views.list} store={{ router }}>
                     Vulnerabilities
                   </Link>
                 </MenuItem>
@@ -82,7 +82,7 @@ class Nav extends Component {
               <Menu alignment={Alignments.RIGHT}>
                 <MenuItem>
                   <Button
-                    onClick={() => goTo(views.commit, null, this.props.store)}
+                    onClick={() => goTo(views.commit, null, { router })}
                     bgColor="black"
                     color="white"
                   >

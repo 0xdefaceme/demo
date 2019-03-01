@@ -1,9 +1,9 @@
 // @format
-import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
-import {observer, inject} from 'mobx-react';
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import { observer, inject } from "mobx-react";
 
-@inject('store')
+@inject("router", "web3", "account", "vulnerability")
 @observer
 class Pay extends Component {
   constructor(props) {
@@ -13,24 +13,20 @@ class Pay extends Component {
   }
 
   async componentDidMount() {
-    const id = this.props.store.router.params.id;
-    const {web3} = this.props.store;
-    const account = (await web3.eth.getAccounts())[0];
-    const {vulnerability} = this.props.store;
+    const { router, web3, account, vulnerability } = this.props;
+    const id = router.params.id;
     await vulnerability.compute(web3, account, id);
   }
 
   async onPay() {
-    const id = this.props.store.router.params.id;
-    const {web3} = this.props.store;
-    const account = (await web3.eth.getAccounts())[0];
-    const {vulnerability} = this.props.store;
+    const { router, web3, account, vulnerability } = this.props;
+    const id = router.params.id;
     await vulnerability.pay(web3, account, id);
     await vulnerability.compute(web3, account, id);
   }
 
   render() {
-    const {vulnerability} = this.props.store;
+    const { vulnerability } = this.props;
     return (
       <div>
         <p>Only possible as owner of the contract.</p>
