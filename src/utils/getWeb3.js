@@ -1,11 +1,11 @@
 // @format
-import Web3 from 'web3';
+import Web3 from "web3";
 
-import config from '../config';
+import config from "../config";
 
 const resolveWeb3 = resolve => {
-  let {web3} = window;
-  const localProvider = config.INFURA_ENDPOINT;
+  let { web3 } = window;
+  const localProvider = `https://${config.TARGET_NETWORK}.infura.io`;
 
   if (window.ethereum) {
     web3 = new Web3(ethereum);

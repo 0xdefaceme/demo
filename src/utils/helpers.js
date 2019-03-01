@@ -3,6 +3,15 @@ import React from "react";
 import config from "../config";
 import { Label } from "../components";
 
+export function netToEtherscanAPI(network) {
+  switch (config.TARGET_NETWORK) {
+    case "mainnet":
+      return "api";
+    case "rinkeby":
+      return "api-rinkeby";
+  }
+}
+
 export function shortenAddress(value) {
   if (value && typeof value === "string") {
     return (

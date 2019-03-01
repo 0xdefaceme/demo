@@ -1,6 +1,6 @@
 {
     "IPFS_PROVIDER": "ipfs.infura.io",
-    "INFURA_ENDPOINT": "https://rinkeby.infura.io",
+    "TARGET_NETWORK": "rinkeby",
     "DECIMAL_PLACES": 2,
     "RINKEBY_TEST": {
         "NEGOTIATOR": "0x83878998E6790803C36512cEc71625D3F5EC3db7",
