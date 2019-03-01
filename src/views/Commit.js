@@ -5,90 +5,7 @@ import { observer, inject } from "mobx-react";
 import { Grid, Cell } from "react-foundation";
 import styled from "styled-components";
 
-import { Button } from "../components";
-
-const Header = styled.div`
-  font-weight: bold;
-  font-size: 2em;
-  background-color: #f8f8f8;
-  border-top: 1px solid #eeeeee;
-  border-left: 1px solid #eeeeee;
-  border-right: 1px solid #eeeeee;
-  border-radius: 5px;
-  padding: 5px 5px 5px 10px;
-`;
-
-const Disclaimer = styled.div`
-  background-color: white;
-  border-left: 1px solid #eeeeee;
-  border-right: 1px solid #eeeeee;
-  padding: 10px 1em 10px 1em;
-  font-size: 1.2em;
-  & p {
-    margin-bottom: 0.1em;
-  }
-  & ul {
-    margin-top: 0.25em;
-    margin-bottom: 0.25em;
-  }
-`;
-
-const Form = styled.div`
-  & .cell {
-    background-color: white;
-    border-left: 1px solid #eeeeee;
-    border-right: 1px solid #eeeeee;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  & .cell:first-child {
-    font-size: 1.2em;
-    font-weight: bold;
-    background-color: #f8f8f8;
-    padding: 10px 0 10px 0;
-  }
-  & .cell:nth-child(odd) {
-    border-left: none;
-  }
-  & .cell:nth-child(even) {
-    border-right: none;
-    font-weight: bold;
-  }
-`;
-
-const Footer = styled.div`
-  border-bottom: 1px solid #eeeeee;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-left: 1px solid #eeeeee;
-  border-right: 1px solid #eeeeee;
-  background-color: white;
-  margin-bottom: 2em;
-  height: 3em;
-  & ${Button} {
-    float: right;
-    margin-right: 0.5em;
-  }
-`;
-
-const Input = styled.input`
-  margin: 5px 0 5px 0;
-  padding: 0;
-  border: none;
-  outline: none;
-  box-shadow: inset 0px 0px 0px 0px black;
-  &: hover {
-    box-shadow: inset 0px 0px 0px 0px black;
-  }
-  &: focus {
-    box-shadow: inset 0px 0px 0px 0px black;
-    border: none;
-  }
-  & :disabled {
-    background-color: white;
-  }
-`;
+import { Button, Header, Disclaimer, Form, Footer, Input } from "../components";
 
 @inject("account", "web3", "vulnerabilities")
 @observer
@@ -97,6 +14,17 @@ class Commit extends Component {
     super(props);
 
     this.onCommit = this.onCommit.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.state = {
+      balance: "N/A"
+    };
+  }
+
+  async onChange() {
+    const { web3 } = this.props;
+    const exploitable = this.refs.exploitable.value;
+    const balance = await web3.eth.getBalance(exploitable);
+    this.setState({ balance: web3.utils.fromWei(balance) });
   }
 
   async onCommit() {
@@ -110,6 +38,7 @@ class Commit extends Component {
 
   render() {
     const { account } = this.props;
+    const { balance } = this.state;
     return (
       <Grid>
         <Cell large={3} />
@@ -160,11 +89,16 @@ class Commit extends Component {
                   type="text"
                   placeholder="e.g. 0x9575eb2a7804c43f68dc79..."
                   ref="exploitable"
+                  onChange={this.onChange}
                 />
               </Cell>
-              <Cell large={4}>Damage (ETH)</Cell>
+              <Cell large={4}>Contract Balance (ETH)</Cell>
               <Cell large={8}>
-                <Input type="number" placeholder="e.g. 1.1234" ref="damage" />
+                <Input type="text" value={balance} disabled />
+              </Cell>
+              <Cell large={4}>Estimated Damage (ETH)</Cell>
+              <Cell large={8}>
+                <Input type="number" placeholder="e.g. 12.1234" ref="damage" />
               </Cell>
               <Cell large={4}>Your Address</Cell>
               <Cell large={8}>

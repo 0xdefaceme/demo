@@ -5,6 +5,7 @@ import { observer, inject } from "mobx-react";
 import { Grid, Cell, Menu, MenuItem, Alignments } from "react-foundation";
 import styled from "styled-components";
 import { Link } from "mobx-router";
+import ReactTooltip from "react-tooltip";
 
 import views from "../views";
 import config from "../config";
@@ -152,9 +153,14 @@ class Home extends Component {
                         </Button>
                       </a>
                       <Link view={views.list} store={{ router }}>
-                        <HollowButton bgColor="white" color="black">
+                        <HollowButton
+                          data-tip="Metamask required!"
+                          bgColor="white"
+                          color="black"
+                        >
                           Test the demo
                         </HollowButton>
+                        <ReactTooltip place="top" type="dark" effect="solid" />
                       </Link>
                     </ButtonWrapper>
                   </HeadlineWrapper>

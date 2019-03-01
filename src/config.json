@@ -12,6 +12,10 @@
         "PAID": "#FF9800",
         "REVEALED": "#FF5722",
         "EXITED": "#4CAF50",
-        "DECLINED": "#F44336"
+        "DECLINED": "#F44336",
+        "NETWORKS": {
+            "MAINNET": "#00E676",
+            "RINKEBY": "#FFEA00"
+        }
     }
 }

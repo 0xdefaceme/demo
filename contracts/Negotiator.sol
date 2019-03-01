@@ -130,4 +130,9 @@ contract Negotiator {
             }
         }
     }
+
+    function reward(uint256 id) public view returns (uint256) {
+        Vuln storage vuln = vulns[id]; 
+        return vuln.damage * (vuln.exploitable.percentageEIP1337() / 100);
+    }
 }

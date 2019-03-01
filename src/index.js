@@ -26,8 +26,6 @@ async function boot() {
     account = (await web3.eth.getAccounts())[0];
   } catch (err) {
     console.log(err);
-    web3 = await getWeb3Anon();
-    account = "";
   }
   const ipfs = ipfsClient(config.IPFS_PROVIDER, "5001", { protocol: "https" });
 
@@ -43,9 +41,9 @@ async function boot() {
   startRouter(views, store, { html5history: false });
 
   ReactDOM.render(
-    // NOTE: We inject `store` here as mobx will otherwise throw an error. We're
-    // however only injecting individual stores and never the global store in
-    // the views!
+    // NOTE: We inject `store` here as mobx will otherwise throw an error.
+    // We're however only injecting individual stores and never the global
+    // store in the views!
     <Provider store={store} {...store}>
       <App>
         <MobxRouter />
