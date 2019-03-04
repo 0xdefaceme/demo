@@ -59,6 +59,7 @@ class Reveal extends Component {
                 Use the tools provided by the Markdown editor e.g. code
                 highlighting
               </li>
+              <li>Include a calculation of your damage estimate</li>
             </ul>
             <p>Happy revealing!</p>
           </Disclaimer>

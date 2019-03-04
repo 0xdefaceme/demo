@@ -104,7 +104,7 @@ class Pay extends Component {
             </p>
             <PrivateKey>{vulnerability.privateKey}</PrivateKey>
           </PrivateKeyWrapper>
-          <Footer large={12}>
+          <Footer>
             <Button bgColor="black" color="white" onClick={this.onPay}>
               Pay
             </Button>

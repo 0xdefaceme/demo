@@ -11,7 +11,7 @@ import views from "../views";
 import config from "../config";
 
 import Nav from "./Nav";
-import { Button, HR } from "../components";
+import { Button, HollowButton, HR } from "../components";
 
 import logo from "../assets/placeholder.png";
 
@@ -80,18 +80,6 @@ const ButtonWrapper = styled.div`
   @media (max-width: 768px) {
     justify-content: center;
     align-items: center;
-  }
-`;
-
-const HollowButton = styled.button`
-  border-radius: 5px;
-  display: inline-flex;
-  background-color: ${props => props.bgColor};
-  color: ${props => props.color};
-  border: 1px solid ${props => props.color};
-  padding: 10px;
-  &:hover {
-    cursor: pointer;
   }
 `;
 

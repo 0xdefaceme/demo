@@ -1,4 +1,4 @@
-//@format
+
 
 import styled from "styled-components";
 
@@ -10,6 +10,21 @@ const Button = styled.button`
   padding: 10px;
   border-radius: 5px;
   margin: ${props => props.margin};
+  &:hover {
+    cursor: pointer;
+  }
+  &:disabled {
+    cursor: not-allowed;
+  }
+`;
+
+const HollowButton = styled.button`
+  border-radius: 5px;
+  display: inline-flex;
+  background-color: ${props => props.bgColor};
+  color: ${props => props.color};
+  border: 1px solid ${props => props.color};
+  padding: 10px;
   &:hover {
     cursor: pointer;
   }
@@ -101,9 +116,8 @@ const Footer = styled.div`
   border-left: 1px solid #eeeeee;
   border-right: 1px solid #eeeeee;
   background-color: white;
-  margin-bottom: 2em;
   height: 3.5em;
-  & ${Button} {
+  & ${Button}, ${HollowButton} {
     float: right;
     margin-top: 0.5em;
     margin-right: 0.5em;
@@ -128,4 +142,14 @@ const Input = styled.input`
   }
 `;
 
-export { Button, Label, HR, Header, Input, Form, Disclaimer, Footer };
+export {
+  Button,
+  HollowButton,
+  Label,
+  HR,
+  Header,
+  Input,
+  Form,
+  Disclaimer,
+  Footer
+};
