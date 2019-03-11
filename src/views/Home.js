@@ -247,7 +247,7 @@ class Home extends Component {
           <Content color="black" height="auto">
             <h1>Videos</h1>
             <p>
-              Tim gave a lighting talk introducing 0xdeface.me at EthCC 2019 in
+              Tim gave a lightning talk introducing 0xdeface.me at EthCC 2019 in
               Paris. It's only 4 mins. Check it out!
             </p>
             <VideoWrapper>
