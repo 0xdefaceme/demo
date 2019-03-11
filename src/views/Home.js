@@ -107,6 +107,10 @@ const Section = props => (
   </Background>
 );
 
+const VideoWrapper = styled.div`
+  text-align: center;
+`;
+
 @inject("router")
 @observer
 class Home extends Component {
@@ -241,6 +245,21 @@ class Home extends Component {
         </Section>
         <Section content bgColor={config.CSS.BACKGROUND_COLOR} color="black">
           <Content color="black" height="auto">
+            <h1>Videos</h1>
+            <p>
+              Tim gave a lighting talk introducing 0xdeface.me at EthCC 2019 in
+              Paris. It's only 4 mins. Check it out!
+            </p>
+            <VideoWrapper>
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube-nocookie.com/embed/BvHzk1bojdg"
+                frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              />
+            </VideoWrapper>
             <h1>Funding</h1>
             <p>
               0xdeface is being build by{" "}
