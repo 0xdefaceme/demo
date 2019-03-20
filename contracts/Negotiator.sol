@@ -49,7 +49,7 @@ contract Negotiator {
         IExploitable exploitable,
         uint256 damage
     ) public returns (uint256 id) {
-        require(exploitable.implementsEIP1337());
+        require(exploitable.implementsExploitable());
         require(damage <= address(exploitable).balance);
 
         id = vulns.push(Vuln({
@@ -76,8 +76,6 @@ contract Negotiator {
 
     function pay(uint256 id, string memory key) public payable {
         Vuln storage vuln = vulns[id]; 
-        uint256 bounty = vuln.damage * (vuln.exploitable.percentageEIP1337() / 100);
-        require(msg.value >= bounty);
         require(msg.sender == address(vuln.exploitable));
         require(vuln.status == Status.Commited);
 
@@ -133,6 +131,6 @@ contract Negotiator {
 
     function reward(uint256 id) public view returns (uint256) {
         Vuln storage vuln = vulns[id]; 
-        return vuln.damage * (vuln.exploitable.percentageEIP1337() / 100);
+        return vuln.damage;
     }
 }
