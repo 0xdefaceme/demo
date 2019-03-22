@@ -8,7 +8,7 @@ import styled from "styled-components";
 import views from "../views";
 import { Button, Header, Disclaimer, Form, Footer, Input } from "../components";
 
-@inject("account", "web3", "vulnerabilities")
+@inject("router", "account", "web3", "vulnerabilities")
 @observer
 class Commit extends Component {
   constructor(props) {

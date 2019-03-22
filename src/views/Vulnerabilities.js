@@ -199,7 +199,10 @@ class VulnerabilityList extends Component {
                         </span>
                         <ReactTooltip place="top" type="dark" effect="solid" />
                       </Td>
-                      <Td>{statusToLabel(vuln.status)}</Td>
+                      <Td>
+                        {statusToLabel(vuln.status, vuln.reason)}
+                        <ReactTooltip place="top" type="dark" effect="solid" />
+                      </Td>
                       <Td>
                         <Link
                           view={views.view}

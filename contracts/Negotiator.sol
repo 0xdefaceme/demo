@@ -12,6 +12,7 @@ contract Negotiator {
         uint256 bounty;
         string hash;
         Status status;
+        string reason;
     }
 
     enum Status {Commited, Paid, Revealed, Exited, Declined}
@@ -59,7 +60,8 @@ contract Negotiator {
             key: "",
             bounty: 0,
             hash: "",
-            status: Status.Commited
+            status: Status.Commited,
+            reason: ""
         })) - 1;
         emit Commit(id, address(exploitable), damage, msg.sender);
     }
@@ -85,10 +87,9 @@ contract Negotiator {
         emit Pay(id, key, msg.value);
     }
 
-    // TODO: Add string reason
     // TODO: Decide should also work after a time out, in case the attacker
     //       never reveals a secret
-    function decide(uint256 id, bool exit) public {
+    function decide(uint256 id, bool exit, string memory reason) public {
         Vuln storage vuln = vulns[id];
         require(msg.sender == address(vuln.exploitable));
         require(vuln.status == Status.Revealed);
@@ -96,10 +97,12 @@ contract Negotiator {
         if (exit) {
             vuln.status = Status.Exited;
             vuln.exploitable.exit();
+            vuln.reason = reason;
             vuln.attacker.send(vuln.bounty);
             emit Decide(id, true);
         } else {
             vuln.status = Status.Declined;
+            vuln.reason = reason;
             vuln.exploitable.restore.value(vuln.bounty)();
             emit Decide(id, false);
         }

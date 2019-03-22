@@ -45,7 +45,8 @@ class Decide extends Component {
     return async () => {
       const { web3, vulnerability, account, router } = this.props;
       const id = router.params.id;
-      await vulnerability.decide(web3, account, id, exit);
+      const reason = this.refs.reason.value;
+      await vulnerability.decide(web3, account, id, exit, reason);
       router.goTo(views.list, null, { router });
     };
   }
@@ -137,6 +138,14 @@ class Decide extends Component {
           <Form>
             <Grid>
               <Cell large={12}>Decision</Cell>
+              <Cell large={4}>Reason</Cell>
+              <Cell large={8}>
+                <Input
+                  type="text"
+                  ref="reason"
+                  placeholder="e.g. Damage value too high"
+                />
+              </Cell>
             </Grid>
           </Form>
           <Disclaimer>
