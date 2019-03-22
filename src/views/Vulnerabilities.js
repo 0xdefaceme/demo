@@ -136,8 +136,7 @@ class VulnerabilityList extends Component {
                     <Th>Contract</Th>
                     <Th>Attacker</Th>
                     <Th>Balance (ETH)</Th>
-                    <Th>Damage (ETH)</Th>
-                    <Th>Bounty (ETH)</Th>
+                    <Th>Paid Bounty (ETH)</Th>
                     <Th>Status</Th>
                     <Th>Actions</Th>
                   </Tr>
@@ -184,12 +183,6 @@ class VulnerabilityList extends Component {
                       <Td>
                         <span data-tip={web3.utils.fromWei(vuln.balance)}>
                           {shortenBalance(web3.utils.fromWei(vuln.balance))}
-                        </span>
-                        <ReactTooltip place="top" type="dark" effect="solid" />
-                      </Td>
-                      <Td>
-                        <span data-tip={web3.utils.fromWei(vuln.damage)}>
-                          {shortenBalance(web3.utils.fromWei(vuln.damage))}
                         </span>
                         <ReactTooltip place="top" type="dark" effect="solid" />
                       </Td>

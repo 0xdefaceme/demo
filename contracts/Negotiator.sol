@@ -1,4 +1,4 @@
-pragma solidity 0.5.0;
+pragma solidity ^0.5.2;
 
 import "./IExploitable.sol";
 
@@ -7,7 +7,6 @@ contract Negotiator {
     struct Vuln {
         IExploitable exploitable;
         address payable attacker;
-        uint256 damage;
         string key;
         uint256 bounty;
         string hash;
@@ -22,7 +21,6 @@ contract Negotiator {
     event Commit(
         uint256 indexed id,
         address indexed exploitable,
-        uint256 indexed damage,
         address attacker
     );
 
@@ -47,23 +45,20 @@ contract Negotiator {
     }
 
     function commit(
-        IExploitable exploitable,
-        uint256 damage
+        IExploitable exploitable
     ) public returns (uint256 id) {
         require(exploitable.implementsExploitable());
-        require(damage <= address(exploitable).balance);
 
         id = vulns.push(Vuln({
             exploitable: exploitable,
             attacker: msg.sender,
-            damage: damage,
             key: "",
             bounty: 0,
             hash: "",
             status: Status.Commited,
             reason: ""
         })) - 1;
-        emit Commit(id, address(exploitable), damage, msg.sender);
+        emit Commit(id, address(exploitable), msg.sender);
     }
 
     function reveal(uint256 id, string memory hash) public {
@@ -96,14 +91,15 @@ contract Negotiator {
 
         if (exit) {
             vuln.status = Status.Exited;
-            vuln.exploitable.exit();
             vuln.reason = reason;
+            vuln.exploitable.exit();
             vuln.attacker.send(vuln.bounty);
             emit Decide(id, true);
         } else {
             vuln.status = Status.Declined;
             vuln.reason = reason;
             vuln.exploitable.restore.value(vuln.bounty)();
+            vuln.bounty = 0;
             emit Decide(id, false);
         }
     }
@@ -130,10 +126,5 @@ contract Negotiator {
                 filtered[count++] = j;
             }
         }
-    }
-
-    function reward(uint256 id) public view returns (uint256) {
-        Vuln storage vuln = vulns[id]; 
-        return vuln.damage;
     }
 }

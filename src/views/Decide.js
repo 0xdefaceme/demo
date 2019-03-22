@@ -85,13 +85,9 @@ class Decide extends Component {
               </Cell>
               <Cell large={4}>Bounty (ETH)</Cell>
               <Cell large={8}>
-                <Input type="text" value={vulnerability.bounty} disabled />
-              </Cell>
-              <Cell large={4}>Estimated Damage(ETH)</Cell>
-              <Cell large={8}>
                 <Input
                   type="text"
-                  value={web3.utils.fromWei(vulnerability.damage)}
+                  value={web3.utils.fromWei(vulnerability.bounty, "ether")}
                   disabled
                 />
               </Cell>

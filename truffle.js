@@ -13,10 +13,19 @@ module.exports = {
       network_id: "*"
     },
     rinkeby: {
-      provider: () => new HDWalletProvider(process.env["RINKEBY_PRIVATE_KEY"], "https://rinkeby.infura.io"),
+      provider: () =>
+        new HDWalletProvider(
+          process.env["RINKEBY_PRIVATE_KEY"],
+          "https://rinkeby.infura.io"
+        ),
       gas: 4600000,
       gasPrice: web3.utils.toWei("20", "gwei"),
       network_id: "4"
+    }
+  },
+  compilers: {
+    solc: {
+      version: "0.5.2"
     }
   }
 };

@@ -14,6 +14,7 @@
     "mobx-react": "^5.4.3",
     "mobx-router": "git+https://github.com/TimDaub/mobx-router.git#0xdefaceme",
     "npm": "^6.8.0",
+    "openzeppelin-solidity": "^2.2.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-foundation": "^0.9.6",

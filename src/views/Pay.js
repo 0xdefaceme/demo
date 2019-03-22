@@ -54,7 +54,6 @@ class Pay extends Component {
     const { router, web3, account, vulnerability } = this.props;
     const id = router.params.id;
     await vulnerability.pay(web3, account, id);
-    await vulnerability.compute(web3, account, id);
     router.goTo(views.list, null, { router });
   }
 
@@ -65,7 +64,7 @@ class Pay extends Component {
         <Cell large={3} />
         <Cell large={6}>
           <Header>Pay for a Vulnerability</Header>
-          <Disclaimer>Only possible as a contract owner.</Disclaimer>
+          <Disclaimer>Only possible as a contract operator.</Disclaimer>
           <Form>
             <Grid>
               <Cell large={12}>Form</Cell>
@@ -76,22 +75,6 @@ class Pay extends Component {
               <Cell large={4}>Contract</Cell>
               <Cell large={8}>
                 <Input type="text" value={vulnerability.exploitable} disabled />
-              </Cell>
-              <Cell large={4}>Damage (ETH)</Cell>
-              <Cell large={8}>
-                <Input
-                  type="text"
-                  value={web3.utils.fromWei(vulnerability.damage)}
-                  disabled
-                />
-              </Cell>
-              <Cell large={4}>Bounty to pay(ETH)</Cell>
-              <Cell large={8}>
-                <Input
-                  type="text"
-                  value={web3.utils.fromWei(vulnerability.tmpbounty)}
-                  disabled
-                />
               </Cell>
             </Grid>
           </Form>
