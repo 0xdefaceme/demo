@@ -78,9 +78,13 @@ class Decide extends Component {
               <Cell large={8}>
                 <Input type="text" value={vulnerability.exploitable} disabled />
               </Cell>
-              <Cell large={4}>Hash</Cell>
+              <Cell large={4}>Encrypted report</Cell>
               <Cell large={8}>
-                <Input type="text" value={vulnerability.hash} disabled />
+                <Input type="text" value={vulnerability.encrypted} disabled />
+              </Cell>
+              <Cell large={4}>Plain report</Cell>
+              <Cell large={8}>
+                <Input type="text" value={vulnerability.plain} disabled />
               </Cell>
               <Cell large={4}>Bounty (ETH)</Cell>
               <Cell large={8}>

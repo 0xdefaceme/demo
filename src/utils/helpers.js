@@ -72,5 +72,11 @@ export function statusToLabel(status, reason) {
           Declined
         </Label>
       );
+    case 5:
+      return (
+        <Label data-tip={reason} bgColor={config.CSS.TIMEOUT}>
+          Timeout
+        </Label>
+      );
   }
 }
