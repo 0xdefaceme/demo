@@ -9,7 +9,8 @@ contract Negotiator {
         address payable attacker;
         string key;
         uint256 bounty;
-        string hash;
+        string plain;
+        string encrypted;
         Status status;
         string reason;
     }
@@ -26,7 +27,8 @@ contract Negotiator {
 
     event Reveal(
         uint256 indexed id,
-        string indexed hash
+        string indexed plain,
+        string indexed encrypted
     );
 
     event Pay(
@@ -54,21 +56,27 @@ contract Negotiator {
             attacker: msg.sender,
             key: "",
             bounty: 0,
-            hash: "",
+            plain: "",
+            encrypted: "",
             status: Status.Commited,
             reason: ""
         })) - 1;
         emit Commit(id, address(exploitable), msg.sender);
     }
 
-    function reveal(uint256 id, string memory hash) public {
+    function reveal(
+        uint256 id,
+        string memory plain,
+        string memory encrypted
+    ) public {
         Vuln storage vuln = vulns[id];
         require(vuln.status == Status.Paid);
         require(msg.sender == vuln.attacker);
 
-        vuln.hash = hash;
+        vuln.plain = plain;
+        vuln.encrypted = encrypted;
         vuln.status = Status.Revealed;
-        emit Reveal(id, hash);
+        emit Reveal(id, plain, encrypted);
     }
 
     function pay(uint256 id, string memory key) public payable {

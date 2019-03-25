@@ -37,7 +37,6 @@ class Decide extends Component {
     const { web3, vulnerability, account, router } = this.props;
     const id = router.params.id;
     const key = this.refs.key.value;
-    const { hash } = vulnerability;
     await vulnerability.decrypt(web3, account, id, key);
   }
 
