@@ -8,7 +8,7 @@ import styled from "styled-components";
 import views from "../views";
 import { Button, Header, Disclaimer, Form, Footer, Input } from "../components";
 
-@inject("account", "web3", "vulnerabilities")
+@inject("router", "account", "web3", "vulnerabilities")
 @observer
 class Commit extends Component {
   constructor(props) {
@@ -30,11 +30,9 @@ class Commit extends Component {
 
   async onCommit() {
     const exploitable = this.refs.exploitable.value;
-    let damage = this.refs.damage.value;
 
     const { router, vulnerabilities, web3, account } = this.props;
-    damage = web3.utils.toWei(damage, "ether");
-    await vulnerabilities.commit(web3, account, exploitable, damage);
+    await vulnerabilities.commit(web3, account, exploitable);
     router.goTo(views.list, null, { router });
   }
 
@@ -61,14 +59,6 @@ class Commit extends Component {
             </p>
             <ul>
               <li>
-                "Damage" will be used by the Negotiator to calculate your
-                bounty. Contract owners will decline your vulnerability when you
-                sent an incorrect "damage" estimate! So make sure to set it
-                correctly. Remember, that when you later <i>reveal</i> your
-                vulnerability report to give a little calculation on how you
-                arrived at the damage estimate.
-              </li>
-              <li>
                 Only contracts implementing EIP-XXX correctly will be
                 committable.
               </li>
@@ -77,7 +67,7 @@ class Commit extends Component {
                 address as we'd like to send you updates on the status of your
                 vulnerability. Especially, when it's time for you to{" "}
                 <i>reveal</i>. We'll not share your email with the contract
-                owner.
+                operator.
               </li>
             </ul>
             <p>And that's it. Happy committing!</p>
@@ -97,10 +87,6 @@ class Commit extends Component {
               <Cell large={4}>Contract Balance (ETH)</Cell>
               <Cell large={8}>
                 <Input type="text" value={balance} disabled />
-              </Cell>
-              <Cell large={4}>Estimated Damage (ETH)</Cell>
-              <Cell large={8}>
-                <Input type="number" placeholder="e.g. 12.1234" ref="damage" />
               </Cell>
               <Cell large={4}>Your Address</Cell>
               <Cell large={8}>

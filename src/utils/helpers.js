@@ -52,8 +52,7 @@ export function shortenBalance(value) {
   }
 }
 
-export function statusToLabel(status) {
-  status = parseInt(status, 10);
+export function statusToLabel(status, reason) {
   switch (status) {
     case 0:
       return <Label bgColor={config.CSS.COMMITTED}>Committed</Label>;
@@ -62,8 +61,22 @@ export function statusToLabel(status) {
     case 2:
       return <Label bgColor={config.CSS.REVEALED}>Revealed</Label>;
     case 3:
-      return <Label bgColor={config.CSS.EXITED}>Exited</Label>;
+      return (
+        <Label data-tip={reason} bgColor={config.CSS.EXITED}>
+          Exited
+        </Label>
+      );
     case 4:
-      return <Label bgColor={config.CSS.DECLINED}>Declined</Label>;
+      return (
+        <Label data-tip={reason} bgColor={config.CSS.DECLINED}>
+          Declined
+        </Label>
+      );
+    case 5:
+      return (
+        <Label data-tip={reason} bgColor={config.CSS.TIMEOUT}>
+          Timeout
+        </Label>
+      );
   }
 }

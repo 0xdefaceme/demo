@@ -37,7 +37,6 @@ class Decide extends Component {
     const { web3, vulnerability, account, router } = this.props;
     const id = router.params.id;
     const key = this.refs.key.value;
-    const { hash } = vulnerability;
     await vulnerability.decrypt(web3, account, id, key);
   }
 
@@ -45,7 +44,8 @@ class Decide extends Component {
     return async () => {
       const { web3, vulnerability, account, router } = this.props;
       const id = router.params.id;
-      await vulnerability.decide(web3, account, id, exit);
+      const reason = this.refs.reason.value;
+      await vulnerability.decide(web3, account, id, exit, reason);
       router.goTo(views.list, null, { router });
     };
   }
@@ -78,19 +78,19 @@ class Decide extends Component {
               <Cell large={8}>
                 <Input type="text" value={vulnerability.exploitable} disabled />
               </Cell>
-              <Cell large={4}>Hash</Cell>
+              <Cell large={4}>Encrypted report</Cell>
               <Cell large={8}>
-                <Input type="text" value={vulnerability.hash} disabled />
+                <Input type="text" value={vulnerability.encrypted} disabled />
+              </Cell>
+              <Cell large={4}>Plain report</Cell>
+              <Cell large={8}>
+                <Input type="text" value={vulnerability.plain} disabled />
               </Cell>
               <Cell large={4}>Bounty (ETH)</Cell>
               <Cell large={8}>
-                <Input type="text" value={vulnerability.bounty} disabled />
-              </Cell>
-              <Cell large={4}>Estimated Damage(ETH)</Cell>
-              <Cell large={8}>
                 <Input
                   type="text"
-                  value={web3.utils.fromWei(vulnerability.damage)}
+                  value={web3.utils.fromWei(vulnerability.bounty, "ether")}
                   disabled
                 />
               </Cell>
@@ -137,6 +137,14 @@ class Decide extends Component {
           <Form>
             <Grid>
               <Cell large={12}>Decision</Cell>
+              <Cell large={4}>Reason</Cell>
+              <Cell large={8}>
+                <Input
+                  type="text"
+                  ref="reason"
+                  placeholder="e.g. Damage value too high"
+                />
+              </Cell>
             </Grid>
           </Form>
           <Disclaimer>

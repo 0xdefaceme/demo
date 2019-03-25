@@ -89,15 +89,13 @@ class Vulnerabilities {
     }
   });
 
-  commit = flow(function*(web3, account, exploitable, damage) {
+  commit = flow(function*(web3, account, exploitable) {
     this.state = "pending";
 
     const contract = yield this.contract(web3);
 
     try {
-      yield contract.methods
-        .commit(exploitable, damage)
-        .send({ from: account });
+      yield contract.methods.commit(exploitable).send({ from: account });
 
       this.state = "done";
     } catch (err) {

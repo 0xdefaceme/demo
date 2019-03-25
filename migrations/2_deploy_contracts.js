@@ -15,6 +15,9 @@ module.exports = function(deployer, network, accounts) {
           Exploitable.abi,
           instance.address
         );
+        await contract.methods
+          .increaseBounty()
+          .send({ from: accounts[0], value: web3.utils.toWei("0.5", "ether") });
         return contract.methods
           .deposit()
           .send({ from: accounts[0], value: web3.utils.toWei("1", "ether") });

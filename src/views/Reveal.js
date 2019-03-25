@@ -8,7 +8,7 @@ import "react-mde/lib/styles/css/react-mde-all.css";
 import { Grid, Cell } from "react-foundation";
 import styled from "styled-components";
 
-import view from "../views";
+import views from "../views";
 import { Button, Header, Disclaimer, Form, Footer, Input } from "../components";
 
 @inject("router", "web3", "ipfs", "account", "vulnerability")

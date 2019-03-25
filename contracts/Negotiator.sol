@@ -1,4 +1,4 @@
-pragma solidity 0.5.0;
+pragma solidity ^0.5.2;
 
 import "./IExploitable.sol";
 
@@ -7,27 +7,30 @@ contract Negotiator {
     struct Vuln {
         IExploitable exploitable;
         address payable attacker;
-        uint256 damage;
         string key;
         uint256 bounty;
-        string hash;
+        string plain;
+        string encrypted;
         Status status;
+        string reason;
+        uint256 paidAt;
     }
 
-    enum Status {Commited, Paid, Revealed, Exited, Declined}
+    enum Status {Commited, Paid, Revealed, Exited, Declined, Timeout}
 
     Vuln[] public vulns;
+    uint256 public timeout = 1 days;
 
     event Commit(
         uint256 indexed id,
         address indexed exploitable,
-        uint256 indexed damage,
         address attacker
     );
 
     event Reveal(
         uint256 indexed id,
-        string indexed hash
+        string indexed plain,
+        string indexed encrypted
     );
 
     event Pay(
@@ -41,70 +44,86 @@ contract Negotiator {
         bool indexed exit
     );
 
-    // TODO: Decide what to do with this constructor
-    constructor() public {
-    }
-
     function commit(
-        IExploitable exploitable,
-        uint256 damage
+        IExploitable exploitable
     ) public returns (uint256 id) {
-        require(exploitable.implementsEIP1337());
-        require(damage <= address(exploitable).balance);
+        require(exploitable.implementsExploitable());
 
         id = vulns.push(Vuln({
             exploitable: exploitable,
             attacker: msg.sender,
-            damage: damage,
             key: "",
             bounty: 0,
-            hash: "",
-            status: Status.Commited
+            plain: "",
+            encrypted: "",
+            status: Status.Commited,
+            reason: "",
+            paidAt: 0
         })) - 1;
-        emit Commit(id, address(exploitable), damage, msg.sender);
-    }
-
-    function reveal(uint256 id, string memory hash) public {
-        Vuln storage vuln = vulns[id];
-        require(vuln.status == Status.Paid);
-        require(msg.sender == vuln.attacker);
-
-        vuln.hash = hash;
-        vuln.status = Status.Revealed;
-        emit Reveal(id, hash);
+        emit Commit(id, address(exploitable), msg.sender);
     }
 
     function pay(uint256 id, string memory key) public payable {
         Vuln storage vuln = vulns[id]; 
-        uint256 bounty = vuln.damage * (vuln.exploitable.percentageEIP1337() / 100);
-        require(msg.value >= bounty);
         require(msg.sender == address(vuln.exploitable));
         require(vuln.status == Status.Commited);
 
         vuln.key = key; 
+        vuln.paidAt = block.timestamp;
         vuln.bounty = msg.value;
         vuln.status = Status.Paid;
         emit Pay(id, key, msg.value);
     }
 
-    // TODO: Add string reason
-    // TODO: Decide should also work after a time out, in case the attacker
-    //       never reveals a secret
-    function decide(uint256 id, bool exit) public {
+    function reveal(
+        uint256 id,
+        string memory plain,
+        string memory encrypted
+    ) public {
+        Vuln storage vuln = vulns[id];
+        require(vuln.status == Status.Paid);
+        require(msg.sender == vuln.attacker);
+
+        vuln.plain = plain;
+        vuln.encrypted = encrypted;
+        vuln.status = Status.Revealed;
+        emit Reveal(id, plain, encrypted);
+    }
+
+    function decide(uint256 id, bool exit, string memory reason) public {
         Vuln storage vuln = vulns[id];
         require(msg.sender == address(vuln.exploitable));
-        require(vuln.status == Status.Revealed);
 
-        if (exit) {
-            vuln.status = Status.Exited;
-            vuln.exploitable.exit();
-            vuln.attacker.send(vuln.bounty);
-            emit Decide(id, true);
-        } else {
-            vuln.status = Status.Declined;
+        if (timedout(id)) {
+            vuln.status = Status.Timeout;
+            vuln.reason = "Attacker didn't reveal in time.";
             vuln.exploitable.restore.value(vuln.bounty)();
+            vuln.bounty = 0;
             emit Decide(id, false);
+        } else if (vuln.status == Status.Revealed) {
+            if (exit) {
+                vuln.status = Status.Exited;
+                vuln.reason = reason;
+                vuln.exploitable.exit();
+                vuln.attacker.send(vuln.bounty);
+                vuln.bounty = 0;
+                emit Decide(id, true);
+            } else {
+                vuln.status = Status.Declined;
+                vuln.reason = reason;
+                vuln.exploitable.restore.value(vuln.bounty)();
+                vuln.bounty = 0;
+                emit Decide(id, false);
+            }
+        } else {
+            revert();
         }
+    }
+
+    function timedout(uint256 _id) public view returns (bool) {
+        Vuln storage vuln = vulns[_id];
+        return vuln.status == Status.Paid && 
+            vuln.paidAt + timeout > block.timestamp;
     }
 
     function length() public view returns (uint256) {
@@ -129,10 +148,5 @@ contract Negotiator {
                 filtered[count++] = j;
             }
         }
-    }
-
-    function reward(uint256 id) public view returns (uint256) {
-        Vuln storage vuln = vulns[id]; 
-        return vuln.damage * (vuln.exploitable.percentageEIP1337() / 100);
     }
 }
