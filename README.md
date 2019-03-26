@@ -22,6 +22,8 @@ The front end is accessible at http://localhost:3000.
 
 ## Style Guide
 
+### Javascript
+
 We use prettier to format our JavaScript code. That's why there's a `//@format`
 on the top of every `.js` file. As we're using ESNEXT modifiers, it's required
 to enable `babylon` when using prettier. In vim this can be done by adding
@@ -31,6 +33,11 @@ let g:prettier#config#parser = 'babylon'
 ```
 
 to your `.vimrc`.
+
+### Solidity
+
+We're using Ethlint a.k.a. Solium for linting Solidity. It integrates with
+[many IDEs](https://github.com/duaraghav8/Ethlint/blob/master/docs/user-guide.rst#ide--editor-integrations).
 
 ## Contributing and License
 

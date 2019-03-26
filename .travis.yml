@@ -3,7 +3,8 @@ node_js:
     - "11.6.0"
 script:
     - npm i -g truffle
-    - truffle compile
+    - npm i -g solium
+    - truffle compile && solium -d contracts/
     - npm run build
 deploy:
     local-dir: ./dist

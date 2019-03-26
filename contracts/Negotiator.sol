@@ -47,7 +47,10 @@ contract Negotiator {
     function commit(
         IExploitable exploitable
     ) public returns (uint256 id) {
-        require(exploitable.implementsExploitable());
+        require(
+            exploitable.implementsExploitable(),
+            "Only exploitable with implementsExploitable can be committed"
+        );
 
         id = vulns.push(Vuln({
             exploitable: exploitable,
@@ -65,10 +68,17 @@ contract Negotiator {
 
     function pay(uint256 id, string memory key) public payable {
         Vuln storage vuln = vulns[id]; 
-        require(msg.sender == address(vuln.exploitable));
-        require(vuln.status == Status.Commited);
+        require(
+            msg.sender == address(vuln.exploitable), 
+            "Only exploitable can call pay"
+        );
+        require(
+            vuln.status == Status.Commited,
+            "Only committed vulns can be paid"
+        );
 
         vuln.key = key; 
+        //solium-disable security/no-block-members
         vuln.paidAt = block.timestamp;
         vuln.bounty = msg.value;
         vuln.status = Status.Paid;
@@ -81,8 +91,8 @@ contract Negotiator {
         string memory encrypted
     ) public {
         Vuln storage vuln = vulns[id];
-        require(vuln.status == Status.Paid);
-        require(msg.sender == vuln.attacker);
+        require(vuln.status == Status.Paid, "Only paid vulns can be revealed");
+        require(msg.sender == vuln.attacker, "Only attacker can reveal");
 
         vuln.plain = plain;
         vuln.encrypted = encrypted;
@@ -92,7 +102,10 @@ contract Negotiator {
 
     function decide(uint256 id, bool exit, string memory reason) public {
         Vuln storage vuln = vulns[id];
-        require(msg.sender == address(vuln.exploitable));
+        require(
+            msg.sender == address(vuln.exploitable), 
+            "Only exploitable can decide"
+        );
 
         if (timedout(id)) {
             vuln.status = Status.Timeout;
@@ -105,6 +118,7 @@ contract Negotiator {
                 vuln.status = Status.Exited;
                 vuln.reason = reason;
                 vuln.exploitable.exit();
+                //solium-disable security/no-send
                 vuln.attacker.send(vuln.bounty);
                 vuln.bounty = 0;
                 emit Decide(id, true);
@@ -116,12 +130,12 @@ contract Negotiator {
                 emit Decide(id, false);
             }
         } else {
-            revert();
+            revert("Only paid or revealed vulns can be decided");
         }
     }
 
-    function timedout(uint256 _id) public view returns (bool) {
-        Vuln storage vuln = vulns[_id];
+    function timedout(uint256 id) public view returns (bool) {
+        Vuln storage vuln = vulns[id];
         return vuln.status == Status.Paid && 
             vuln.paidAt + timeout > block.timestamp;
     }
