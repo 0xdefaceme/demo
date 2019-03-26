@@ -16,7 +16,7 @@ contract Negotiator {
         uint256 paidAt;
     }
 
-    enum Status {Commited, Paid, Revealed, Exited, Declined, Timeout}
+    enum Status {Committed, Paid, Revealed, Exited, Declined, Timeout}
 
     Vuln[] public vulns;
     uint256 public timeout = 1 days;
@@ -59,7 +59,7 @@ contract Negotiator {
             bounty: 0,
             plain: "",
             encrypted: "",
-            status: Status.Commited,
+            status: Status.Committed,
             reason: "",
             paidAt: 0
         })) - 1;
@@ -73,7 +73,7 @@ contract Negotiator {
             "Only exploitable can call pay"
         );
         require(
-            vuln.status == Status.Commited,
+            vuln.status == Status.Committed,
             "Only committed vulns can be paid"
         );
 
