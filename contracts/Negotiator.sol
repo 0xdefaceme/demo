@@ -163,4 +163,8 @@ contract Negotiator {
             }
         }
     }
+
+    function() external payable {
+        revert("Ether cannot be sent to this contract");
+    }
 }

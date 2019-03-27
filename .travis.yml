@@ -4,8 +4,10 @@ node_js:
 script:
     - npm i -g truffle
     - npm i -g solium
+    - npm i -g etherscan-uploader
     - truffle compile && solium -d contracts/
     - npm run build
+    - etherscan-uploader -f ./contracts/Exploitable.sol -a $(jq -r ".RINKEBY_TEST.EXPLOITABLE" .src/config.json) -n Exploitable -e rinkeby -k $ETHERSCAN_TOKEN -c "address payable" -v $(jq -r ".RINKEBY_TEST.NEGOTIATOR" ./src/config.json)
 deploy:
     local-dir: ./dist
     provider: pages
