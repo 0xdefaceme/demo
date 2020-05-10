@@ -11,7 +11,7 @@ import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import "highlight.js/styles/solarized-light.css";
 
 import views from "./views";
-import { getWeb3, getWeb3Anon } from "./utils/getWeb3";
+import { getWeb3Anon } from "./utils/getWeb3";
 import config from "./config";
 
 import App from "./views/App";
@@ -22,7 +22,7 @@ import Vulnerability from "./stores/Vulnerability";
 async function boot() {
   let web3, account;
   try {
-    web3 = await getWeb3();
+    web3 = await getWeb3Anon();
     account = (await web3.eth.getAccounts())[0];
   } catch (err) {
     console.log(err);

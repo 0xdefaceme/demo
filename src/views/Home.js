@@ -146,7 +146,7 @@ class Home extends Component {
                       </a>
                       <Link view={views.list} store={{ router }}>
                         <HollowButton
-                          data-tip="Metamask required!"
+                          data-tip="For a demo, get in touch with tim@daubenschuetz.de"
                           bgColor="white"
                           color="black"
                         >
@@ -262,31 +262,27 @@ class Home extends Component {
             </VideoWrapper>
             <h1>Funding</h1>
             <p>
-              0xdeface is being build by{" "}
-              <a target="_blank" href="https://twitter.com/TimDaub">
+              0xdeface.me is being build by{" "}
+              <a target="_blank" href="https://timdaub.github.io">
                 Tim Daubenschütz
-              </a>{" "}
-              and{" "}
-              <a target="_blank" href="https://twitter.com/vrde">
-                Alberto Granzotto
               </a>
-              . Check out our{" "}
+              . Check out the{" "}
               <a
                 target="_blank"
                 href="https://github.com/0xdefaceme/whitepaper"
               >
                 whitepaper
               </a>
-              . 0xdeface is actively looking for funding in form of grants. For
-              inquiries contact:{" "}
-              <a href="mailto:tim@0xdeface.me">tim@0xdeface.me</a>
+              . 0xdeface.me is actively looking for funding in form of grants.
+              For inquiries contact:{" "}
+              <a href="mailto:tim@daubenschuetz.de">tim@daubenschuetz.de</a>
             </p>
             <HR />
             <h1>Contribute</h1>
             <p>
               Currently, the standard and marketplace are in very early stages
               of development. If you'd like to contribute anyways, email{" "}
-              <a href="mailto:tim@0xdeface.me">tim@0xdeface.me</a>.
+              <a href="mailto:tim@daubenschuetz.de">tim@daubenschuetz.de</a>.
             </p>
           </Content>
         </Section>

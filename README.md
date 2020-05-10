@@ -44,5 +44,5 @@ We're using Ethlint a.k.a. Solium for linting Solidity. It integrates with
 This project is licensed under the MIT license. We highly value outside
 contributions and will merge them as quickly as possible. If you're looking for
 work, check the [issues](https://github.com/0xdefaceme/demo/issues). If you
-have any other questions, write us to tim@0xdeface.me or alberto@0xdeface.me.
+have any other questions, write tim@daubenschuetz.de or open issues.
 Happy hacking!
