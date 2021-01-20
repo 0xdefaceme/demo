@@ -8,7 +8,7 @@ script:
     - truffle compile && solium -d contracts/
     - npm run build
     - sudo apt-get install jq
-    - etherscan-uploader -f ./contracts/Exploitable.sol -a $(jq -r ".RINKEBY_TEST.EXPLOITABLE" .src/config.json) -n Exploitable -e rinkeby -k $ETHERSCAN_TOKEN -c "address payable" -v $(jq -r ".RINKEBY_TEST.NEGOTIATOR" ./src/config.json)
+    - etherscan-uploader -f ./contracts/Exploitable.sol -a $(jq -r ".RINKEBY_TEST.EXPLOITABLE" ./src/config.json) -n Exploitable -e rinkeby -k $ETHERSCAN_TOKEN -c "address payable" -v $(jq -r ".RINKEBY_TEST.NEGOTIATOR" ./src/config.json)
 deploy:
     local-dir: ./dist
     provider: pages
